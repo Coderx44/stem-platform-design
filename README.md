@@ -50,12 +50,19 @@ Multi-tenant, module-based STEM education management platform for NGOs. Manages 
 
 ### Roles
 
+**Operational hierarchy (permissions inherit downward — PM has all Trainer permissions):**
+
 | Designation | System Role | Responsibilities |
 |---|---|---|
-| Trainer | Trainer (L1) | Field data entry — attendance, assessments, sessions, school management |
-| Cluster Lead / Manager | Project Manager (L2) | Approvals, monitoring trainers, reviewing rubrics |
-| Donor | Donor (L3) | View-only — funded school dashboards, impact reports |
-| Regional Manager / Director | Admin (L4) | Full system control — targets, config, trainer management |
+| Trainer | Trainer | Field data entry — attendance, assessments, sessions, school management |
+| Cluster Lead / Manager | Project Manager | All Trainer permissions + approvals, monitoring trainers, reviewing rubrics |
+| Regional Manager / Director | Admin | Full system control — targets, config, trainer management |
+
+**Separate branch (view-only, not in operational hierarchy):**
+
+| Designation | System Role | Responsibilities |
+|---|---|---|
+| Donor | Donor | View-only access to funded schools — dashboards, impact reports. No write access. |
 
 ### Modules
 
@@ -378,12 +385,18 @@ Event sources (workflow transitions, cron reminders, OMR completion, admin annou
 
 ## 11. Role-Based Access Control
 
-### Permission Matrix
+### Role Structure
+
+**Operational hierarchy:** Trainer → Project Manager → Admin. PM inherits all Trainer permissions and adds approvals + management.
+
+**Donor:** Separate branch — view-only access to funded schools. Not part of the operational hierarchy.
+
+### Permission Matrix (system defaults, configurable per tenant)
 
 | Action | Trainer | PM | Donor | Admin |
 |---|---|---|---|---|
-| Mark attendance | Yes | View | — | Yes |
-| Log non-session activity | Yes | View | — | Yes |
+| Mark attendance | Yes | Yes | View | Yes |
+| Log non-session activity | Yes | Yes | — | Yes |
 | Approve/reject entries | — | Yes | — | Yes |
 | Create session plans | Yes | Yes | — | Yes |
 | Upload student data | Yes | Yes | — | Yes |

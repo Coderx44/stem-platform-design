@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture — STEM Platform</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e0e0e0; padding: 32px; max-width: 1100px; margin: 0 auto; line-height: 1.5; }
@@ -10,13 +11,6 @@
   h3 { color: #ccc; font-size: 18px; margin-bottom: 12px; }
   .subtitle { color: #888; font-size: 14px; margin-bottom: 20px; }
   .section { margin-bottom: 24px; }
-  .options { display: flex; flex-direction: column; gap: 16px; }
-  .option { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; padding: 16px; cursor: pointer; display: flex; gap: 16px; }
-  .option:hover { border-color: #666; }
-  .option .letter { font-size: 24px; font-weight: bold; color: #64b5f6; min-width: 40px; }
-  .option .content { flex: 1; }
-  .option .content h3 { margin-top: 0; }
-  .option .content p { color: #aaa; font-size: 13px; }
   .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
   .pros, .cons { padding: 8px; border-radius: 4px; }
   .pros { background: rgba(129,199,132,0.1); }
@@ -27,263 +21,116 @@
   .pros li, .cons li { margin-bottom: 2px; }
   a { color: #64b5f6; }
   code { background: #2a2a3a; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .card { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; overflow: hidden; cursor: pointer; }
-  .card:hover { border-color: #666; }
-  .card-body { padding: 12px; }
-  .mock-nav { background: #2a2a3a; padding: 8px 16px; border-radius: 4px; margin-bottom: 8px; color: #888; }
-  .mock-sidebar { background: #1a1a2e; padding: 16px; min-width: 150px; border-radius: 4px; color: #666; }
-  .mock-content { background: #1a1a2e; padding: 16px; flex: 1; border-radius: 4px; color: #666; }
-  .mock-button { background: #64b5f6; color: #000; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
-  .mock-input { background: #2a2a3a; border: 1px solid #444; padding: 8px; border-radius: 4px; color: #ccc; }
-  .placeholder { background: #2a2a3a; padding: 32px; border-radius: 4px; color: #666; text-align: center; }
-  .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
-  .mockup { border: 1px solid #333; border-radius: 8px; overflow: hidden; }
-  .mockup-header { background: #2a2a3a; padding: 8px 16px; font-size: 12px; color: #888; }
-  .mockup-body { padding: 16px; }
-  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .back-link { display: inline-block; margin-bottom: 20px; color: #64b5f6; text-decoration: none; font-size: 14px; }
   .back-link:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
-<a href="index.html" class="back-link">← Back to Index</a>
-<h2>Architecture Approaches</h2>
-<p class="subtitle">Three approaches for the STEM platform — evaluate trade-offs and pick a direction</p>
+<a href="index.html" class="back-link">&larr; Back to Index</a>
+<h2>Selected Architecture: Hybrid Modular Monolith</h2>
+<p class="subtitle">Custom TypeScript backend + Supabase Auth/DB + AWS S3</p>
 
-<div class="options">
-
-  <div class="option" data-choice="a" onclick="toggleSelect(this)">
-    <div class="letter">A</div>
-    <div class="content">
-      <h3>API-First Modular Monolith</h3>
-      <p><strong>Single backend service</strong> with internal module boundaries. Next.js and React Native both consume the same REST/GraphQL API. Modules are npm packages within a monorepo.</p>
-
-      <div style="margin: 16px 0; padding: 16px; background: #1a1a2e; border-radius: 8px; font-family: monospace; font-size: 13px; line-height: 1.8; color: #e0e0e0;">
-        <div style="color: #888; margin-bottom: 8px;">┌─────────────────────────────────────────────────────┐</div>
-        <div>&nbsp;&nbsp;<span style="color: #64b5f6;">Next.js Web</span> &nbsp;&nbsp;&nbsp; <span style="color: #81c784;">React Native Mobile</span></div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└────────┬────────┘</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ffb74d;">API Gateway / Auth</span></div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼</div>
-        <div style="border: 1px solid #444; border-radius: 6px; padding: 12px; margin: 4px 8px;">
-          <div style="color: #ce93d8; font-weight: bold; margin-bottom: 8px;">Modular Monolith (TypeScript)</div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">School Mgmt</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Trainer Mgmt</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Student Mgmt</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Session Mgmt</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Assessment</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Attendance</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Donor Mgmt</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Reporting</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Notifications</div>
-          </div>
-          <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-            <div style="background: #1a3a2a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px; color: #81c784;">Workflow Engine</div>
-            <div style="background: #1a3a2a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px; color: #81c784;">Module Registry</div>
-          </div>
-        </div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌────────┼────────┐</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 4px 8px;">
-          <div style="background: #2a3a4a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #64b5f6;">
-            <div style="color: #64b5f6; font-weight: bold;">PostgreSQL</div>
-            <div style="font-size: 10px; color: #888; margin-top: 4px;">Self-managed or hosted</div>
-          </div>
-          <div style="background: #4a3a1a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #ffb74d;">
-            <div style="color: #ffb74d; font-weight: bold;">AWS S3</div>
-            <div style="font-size: 10px; color: #888; margin-top: 4px;">OMR sheets, docs, photos</div>
-          </div>
-          <div style="background: #4a2a2a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #ef9a9a;">
-            <div style="color: #ef9a9a; font-weight: bold;">Auth Provider</div>
-            <div style="font-size: 10px; color: #888; margin-top: 4px;">Self-managed JWT</div>
-          </div>
-        </div>
-        <div style="color: #888; margin-top: 8px;">└─────────────────────────────────────────────────────┘</div>
+<div class="section">
+  <h3>System Diagram</h3>
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-family: monospace; font-size: 13px; line-height: 1.8; color: #e0e0e0;">
+    <div style="color: #888; margin-bottom: 8px;">&boxdr;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&boxdl;</div>
+    <div>&nbsp;&nbsp;<span style="color: #64b5f6;">Next.js Web</span> &nbsp;&nbsp;&nbsp; <span style="color: #81c784;">React Native Mobile</span></div>
+    <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&boxur;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&boxhd;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&boxul;</div>
+    <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;</div>
+    <div style="border: 1px solid #ffb74d; border-radius: 6px; padding: 12px; margin: 4px 8px;">
+      <div style="color: #ffb74d; font-weight: bold; margin-bottom: 8px;">Custom TypeScript Backend (Modular Monolith)</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+        <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">School Mgmt</div>
+        <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Trainer Mgmt</div>
+        <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Student Mgmt</div>
+        <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Session Mgmt</div>
+        <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Assessment</div>
+        <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Attendance</div>
+        <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Donor Mgmt</div>
+        <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Reporting</div>
+        <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Notifications</div>
       </div>
-
-      <div class="pros-cons">
-        <div class="pros">
-          <h4>Pros</h4>
-          <ul>
-            <li>Simplest to deploy and operate (one service)</li>
-            <li>Shared types across modules — easy refactoring</li>
-            <li>Fast inter-module calls (in-process)</li>
-            <li>Single CI/CD pipeline</li>
-            <li>Perfect for small-medium team (5-15 devs)</li>
-            <li>S3 gives full control over file lifecycle and CDN</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <h4>Cons</h4>
-          <ul>
-            <li>All modules scale together (can't scale assessment independently)</li>
-            <li>One bad module can crash everything</li>
-            <li>Requires discipline to maintain module boundaries</li>
-            <li>Deployment = full app redeploy</li>
-            <li>Must build/manage auth yourself</li>
-          </ul>
-        </div>
+      <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+        <div style="background: #1a3a2a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px; color: #81c784;">Workflow Engine</div>
+        <div style="background: #1a3a2a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px; color: #81c784;">Module Registry</div>
+        <div style="background: #3a2a1a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px; color: #ffcc80;">OMR Processor</div>
       </div>
     </div>
-  </div>
-
-  <div class="option" data-choice="b" onclick="toggleSelect(this)">
-    <div class="letter">B</div>
-    <div class="content">
-      <h3>Supabase-Native with Edge Functions + S3</h3>
-      <p><strong>Lean heavily on Supabase</strong> for auth, DB, and realtime. Use Edge Functions (Deno) for business logic. <strong>S3 for all media/file storage</strong> (OMR sheets, documents, photos).</p>
-
-      <div style="margin: 16px 0; padding: 16px; background: #1a1a2e; border-radius: 8px; font-family: monospace; font-size: 13px; line-height: 1.8; color: #e0e0e0;">
-        <div style="color: #888; margin-bottom: 8px;">┌─────────────────────────────────────────────────────┐</div>
-        <div>&nbsp;&nbsp;<span style="color: #64b5f6;">Next.js Web</span> &nbsp;&nbsp;&nbsp; <span style="color: #81c784;">React Native Mobile</span></div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└────────┬────────┘</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼</div>
-        <div style="border: 1px solid #4db6ac; border-radius: 6px; padding: 12px; margin: 4px 8px;">
-          <div style="color: #4db6ac; font-weight: bold; margin-bottom: 8px;">Supabase Platform</div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-            <div style="background: #2a4a2a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Auth (built-in)</div>
-            <div style="background: #2a4a2a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">RLS Policies</div>
-            <div style="background: #2a4a2a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Realtime</div>
-          </div>
-          <div style="margin-top: 10px;">
-            <div style="background: #3a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px; color: #ce93d8;">Edge Functions (Deno/TypeScript)</div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 6px;">
-              <div style="background: #2a2a3a; padding: 6px; border-radius: 4px; text-align: center; font-size: 10px;">Workflows</div>
-              <div style="background: #2a2a3a; padding: 6px; border-radius: 4px; text-align: center; font-size: 10px;">OMR Trigger</div>
-              <div style="background: #2a2a3a; padding: 6px; border-radius: 4px; text-align: center; font-size: 10px;">Notifications</div>
-            </div>
-          </div>
-        </div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌────────┼────────┐</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 4px 8px;">
-          <div style="background: #2a4a2a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #4db6ac;">
-            <div style="color: #4db6ac; font-weight: bold;">Supabase DB</div>
-            <div style="font-size: 10px; color: #888; margin-top: 4px;">PostgreSQL + RLS</div>
-          </div>
-          <div style="background: #4a3a1a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #ffb74d;">
-            <div style="color: #ffb74d; font-weight: bold;">AWS S3</div>
-            <div style="font-size: 10px; color: #888; margin-top: 4px;">OMR sheets, docs, photos</div>
-          </div>
-          <div style="background: #3a2a1a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #ffcc80;">
-            <div style="color: #ffcc80; font-weight: bold;">OMR Worker</div>
-            <div style="font-size: 10px; color: #888; margin-top: 4px;">Lambda / separate service</div>
-          </div>
-        </div>
-        <div style="color: #888; margin-top: 8px;">└─────────────────────────────────────────────────────┘</div>
+    <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&boxv;</div>
+    <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&boxdr;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&boxhd;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&boxdl;</div>
+    <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 4px 8px;">
+      <div style="background: #2a4a2a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #4db6ac;">
+        <div style="color: #4db6ac; font-weight: bold;">Supabase Auth</div>
+        <div style="font-size: 10px; color: #888; margin-top: 4px;">JWT + RLS policies</div>
       </div>
-
-      <div class="pros-cons">
-        <div class="pros">
-          <h4>Pros</h4>
-          <ul>
-            <li>Least custom code — Supabase handles auth, DB, realtime</li>
-            <li>Auto-generated REST/GraphQL from DB schema (PostgREST)</li>
-            <li>Fast to prototype and ship MVP</li>
-            <li>S3 gives scalable, cheap media storage with presigned URLs</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <h4>Cons</h4>
-          <ul>
-            <li>Edge Functions have cold-start latency + execution limits</li>
-            <li>Complex business logic (workflows) awkward in Edge Functions</li>
-            <li>OMR processing must be a separate service anyway (can't run in Edge Functions)</li>
-            <li>Vendor lock-in to Supabase platform</li>
-            <li>Hard to maintain modular boundaries</li>
-            <li>Testing Edge Functions is less mature</li>
-          </ul>
-        </div>
+      <div style="background: #2a4a2a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #4db6ac;">
+        <div style="color: #4db6ac; font-weight: bold;">Supabase DB</div>
+        <div style="font-size: 10px; color: #888; margin-top: 4px;">PostgreSQL + RLS</div>
+      </div>
+      <div style="background: #4a3a1a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #ffb74d;">
+        <div style="color: #ffb74d; font-weight: bold;">AWS S3</div>
+        <div style="font-size: 10px; color: #888; margin-top: 4px;">OMR sheets, docs, photos</div>
       </div>
     </div>
+    <div style="color: #888; margin-top: 8px;">&boxur;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&boxul;</div>
   </div>
-
-  <div class="option" data-choice="c" onclick="toggleSelect(this)">
-    <div class="letter">C</div>
-    <div class="content">
-      <h3>Hybrid: Modular Backend + Supabase Auth/DB + S3</h3>
-      <p><strong>Custom TypeScript backend</strong> for all business logic (modular monolith). <strong>Supabase</strong> for Auth and PostgreSQL. <strong>S3</strong> for all media/file storage. Clean separation of concerns.</p>
-
-      <div style="margin: 16px 0; padding: 16px; background: #1a1a2e; border-radius: 8px; font-family: monospace; font-size: 13px; line-height: 1.8; color: #e0e0e0;">
-        <div style="color: #888; margin-bottom: 8px;">┌─────────────────────────────────────────────────────────┐</div>
-        <div>&nbsp;&nbsp;<span style="color: #64b5f6;">Next.js Web</span> &nbsp;&nbsp;&nbsp; <span style="color: #81c784;">React Native Mobile</span></div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└────────┬────────┘</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼</div>
-        <div style="border: 1px solid #ffb74d; border-radius: 6px; padding: 12px; margin: 4px 8px;">
-          <div style="color: #ffb74d; font-weight: bold; margin-bottom: 8px;">Custom TypeScript Backend (Modular Monolith)</div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">School Mgmt</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Trainer Mgmt</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Student Mgmt</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Session Mgmt</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Assessment</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Attendance</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Donor Mgmt</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Reporting</div>
-            <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px;">Notifications</div>
-          </div>
-          <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-            <div style="background: #1a3a2a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px; color: #81c784;">Workflow Engine</div>
-            <div style="background: #1a3a2a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px; color: #81c784;">Module Registry</div>
-            <div style="background: #3a2a1a; padding: 8px; border-radius: 4px; text-align: center; font-size: 11px; color: #ffcc80;">OMR Processor</div>
-          </div>
-        </div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌─────────┼─────────┐</div>
-        <div style="color: #888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 4px 8px;">
-          <div style="background: #2a4a2a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #4db6ac;">
-            <div style="color: #4db6ac; font-weight: bold;">Supabase Auth</div>
-            <div style="font-size: 10px; color: #888; margin-top: 4px;">JWT + RLS policies</div>
-          </div>
-          <div style="background: #2a4a2a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #4db6ac;">
-            <div style="color: #4db6ac; font-weight: bold;">Supabase DB</div>
-            <div style="font-size: 10px; color: #888; margin-top: 4px;">PostgreSQL + RLS</div>
-          </div>
-          <div style="background: #4a3a1a; padding: 10px; border-radius: 4px; text-align: center; font-size: 11px; border: 1px solid #ffb74d;">
-            <div style="color: #ffb74d; font-weight: bold;">AWS S3</div>
-            <div style="font-size: 10px; color: #888; margin-top: 4px;">OMR sheets, docs, photos</div>
-          </div>
-        </div>
-        <div style="color: #888; margin-top: 8px;">└─────────────────────────────────────────────────────────┘</div>
-      </div>
-
-      <div class="pros-cons">
-        <div class="pros">
-          <h4>Pros</h4>
-          <ul>
-            <li>Full control over business logic + clean module boundaries</li>
-            <li>Supabase handles what it's best at (auth, JWT, RLS, PostgreSQL)</li>
-            <li>S3 gives scalable, cheap storage with presigned URLs + CDN</li>
-            <li>OMR processing runs in proper compute (no function limits)</li>
-            <li>Fully testable — standard TypeScript, standard test frameworks</li>
-            <li>Can migrate off Supabase or S3 independently if needed</li>
-            <li>Team writes TypeScript everywhere</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <h4>Cons</h4>
-          <ul>
-            <li>More infrastructure than pure Supabase (need to host backend)</li>
-            <li>Two auth integration points (Supabase JWT validated in backend)</li>
-            <li>Slightly more initial setup than Approach B</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<div style="margin-top: 24px; padding: 16px; background: #1a2a1a; border: 1px solid #4db6ac; border-radius: 8px;">
-  <h3 style="color: #4db6ac; margin-top: 0;">Recommendation: Approach C (Hybrid)</h3>
-  <p style="color: #ccc; margin-bottom: 0;">Approach C gives you the clean modular boundaries of A, the managed-service benefits of B, and avoids the limitations of both. Your OMR processing, workflow engine, and reporting modules need real compute — not Edge Function constraints. Supabase handles identity + database, S3 handles all media, and your TypeScript backend owns all business logic. Three services, each doing what it does best.</p>
+<div class="section">
+  <h3>Why This Approach</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #ffb74d;">
+      <div style="color: #ffb74d; font-weight: bold; margin-bottom: 6px;">Custom Backend</div>
+      <div style="color: #ccc; font-size: 11px;">Full control over business logic. OMR processing, workflow engine, and reporting need real compute — not Edge Function constraints. Clean module boundaries with standard TypeScript.</div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #4db6ac;">
+      <div style="color: #4db6ac; font-weight: bold; margin-bottom: 6px;">Supabase (Auth + DB)</div>
+      <div style="color: #ccc; font-size: 11px;">Handles identity (JWT, OTP, SSO) and PostgreSQL with RLS for tenant isolation. Managed service — no DB ops overhead. Can migrate off independently if needed.</div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #ffb74d;">
+      <div style="color: #ffb74d; font-weight: bold; margin-bottom: 6px;">AWS S3 (Storage)</div>
+      <div style="color: #ccc; font-size: 11px;">All media — OMR sheets, session photos, documents, exports. Presigned URLs for direct upload/download. CloudFront CDN for delivery. Scalable and cheap.</div>
+    </div>
+  </div>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>Pros</h4>
+      <ul>
+        <li>Full control over business logic + clean module boundaries</li>
+        <li>Supabase handles what it's best at (auth, JWT, RLS, PostgreSQL)</li>
+        <li>S3 gives scalable, cheap storage with presigned URLs + CDN</li>
+        <li>OMR processing runs in proper compute (no function limits)</li>
+        <li>Fully testable — standard TypeScript, standard test frameworks</li>
+        <li>Can migrate off Supabase or S3 independently if needed</li>
+        <li>Team writes TypeScript everywhere</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Cons</h4>
+      <ul>
+        <li>More infrastructure than pure Supabase (need to host backend)</li>
+        <li>Two auth integration points (Supabase JWT validated in backend)</li>
+        <li>Slightly more initial setup</li>
+      </ul>
+    </div>
+  </div>
 </div>
-</body></html>
+
+<div class="section">
+  <h3>Why Not the Alternatives</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #888;">
+      <div style="color: #888; font-weight: bold; margin-bottom: 6px;">Pure Modular Monolith (no Supabase)</div>
+      <div style="color: #999; font-size: 11px;">Would need to self-manage auth, database hosting, and connection pooling. More infrastructure burden for no added benefit. Supabase gives us managed auth + Postgres for free.</div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #888;">
+      <div style="color: #888; font-weight: bold; margin-bottom: 6px;">Supabase-Native + Edge Functions</div>
+      <div style="color: #999; font-size: 11px;">Edge Functions have cold-start latency and execution limits. OMR processing and complex workflow logic can't run there — you'd need a separate service anyway, defeating the purpose. Hard to maintain modular boundaries.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
