@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e0e0e0; padding: 32px; max-width: 1100px; margin: 0 auto; line-height: 1.5; }
+  h2 { color: #fff; font-size: 24px; margin-bottom: 4px; }
+  h3 { color: #ccc; font-size: 18px; margin-bottom: 12px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 20px; }
+  .section { margin-bottom: 24px; }
+  .options { display: flex; flex-direction: column; gap: 16px; }
+  .option { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; padding: 16px; cursor: pointer; display: flex; gap: 16px; }
+  .option:hover { border-color: #666; }
+  .option .letter { font-size: 24px; font-weight: bold; color: #64b5f6; min-width: 40px; }
+  .option .content { flex: 1; }
+  .option .content h3 { margin-top: 0; }
+  .option .content p { color: #aaa; font-size: 13px; }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .pros, .cons { padding: 8px; border-radius: 4px; }
+  .pros { background: rgba(129,199,132,0.1); }
+  .cons { background: rgba(239,154,154,0.1); }
+  .pros h4 { color: #81c784; font-size: 12px; margin-bottom: 4px; }
+  .cons h4 { color: #ef9a9a; font-size: 12px; margin-bottom: 4px; }
+  .pros ul, .cons ul { padding-left: 16px; font-size: 12px; color: #ccc; }
+  .pros li, .cons li { margin-bottom: 2px; }
+  a { color: #64b5f6; }
+  code { background: #2a2a3a; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; overflow: hidden; cursor: pointer; }
+  .card:hover { border-color: #666; }
+  .card-body { padding: 12px; }
+  .mock-nav { background: #2a2a3a; padding: 8px 16px; border-radius: 4px; margin-bottom: 8px; color: #888; }
+  .mock-sidebar { background: #1a1a2e; padding: 16px; min-width: 150px; border-radius: 4px; color: #666; }
+  .mock-content { background: #1a1a2e; padding: 16px; flex: 1; border-radius: 4px; color: #666; }
+  .mock-button { background: #64b5f6; color: #000; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+  .mock-input { background: #2a2a3a; border: 1px solid #444; padding: 8px; border-radius: 4px; color: #ccc; }
+  .placeholder { background: #2a2a3a; padding: 32px; border-radius: 4px; color: #666; text-align: center; }
+  .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+  .mockup { border: 1px solid #333; border-radius: 8px; overflow: hidden; }
+  .mockup-header { background: #2a2a3a; padding: 8px 16px; font-size: 12px; color: #888; }
+  .mockup-body { padding: 16px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .back-link { display: inline-block; margin-bottom: 20px; color: #64b5f6; text-decoration: none; font-size: 14px; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back-link">← Back to Index</a>
+<h2>Section 3: Database Design & Multi-Tenancy</h2>
+<p class="subtitle">Supabase PostgreSQL with Row-Level Security for tenant isolation</p>
+
+<div class="section">
+  <h3>Multi-Tenancy with RLS</h3>
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-family: monospace; font-size: 12px; line-height: 1.6; color: #e0e0e0;">
+
+    <div style="text-align: center; margin-bottom: 16px; color: #ffb74d; font-weight: bold; font-size: 14px;">Tenant Isolation Flow</div>
+
+    <div style="display: flex; align-items: stretch; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+      <div style="background: #2a3a4a; padding: 12px 16px; border-radius: 6px; font-size: 11px; text-align: center; min-width: 120px;">
+        <div style="color: #64b5f6; font-weight: bold;">1. Login</div>
+        <div style="color: #888; margin-top: 4px;">Supabase Auth issues JWT</div>
+        <div style="color: #888;">with <code style="color: #ffb74d;">tenant_id</code> in</div>
+        <div style="color: #888;"><code style="color: #ffb74d;">app_metadata</code></div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #2a3a4a; padding: 12px 16px; border-radius: 6px; font-size: 11px; text-align: center; min-width: 120px;">
+        <div style="color: #ce93d8; font-weight: bold;">2. API Request</div>
+        <div style="color: #888; margin-top: 4px;">Backend validates JWT</div>
+        <div style="color: #888;">Sets <code style="color: #ffb74d;">request.config</code></div>
+        <div style="color: #888;">with tenant context</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #2a3a4a; padding: 12px 16px; border-radius: 6px; font-size: 11px; text-align: center; min-width: 120px;">
+        <div style="color: #81c784; font-weight: bold;">3. DB Query</div>
+        <div style="color: #888; margin-top: 4px;">Sets Postgres var:</div>
+        <div style="color: #ffb74d;"><code>set_config(</code></div>
+        <div style="color: #ffb74d;"><code>'app.tenant_id', id)</code></div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #1a3a2a; padding: 12px 16px; border-radius: 6px; font-size: 11px; text-align: center; min-width: 120px; border: 1px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold;">4. RLS Enforced</div>
+        <div style="color: #888; margin-top: 4px;">Every table policy:</div>
+        <div style="color: #81c784;"><code>tenant_id = </code></div>
+        <div style="color: #81c784;"><code>current_setting(</code></div>
+        <div style="color: #81c784;"><code>'app.tenant_id')</code></div>
+      </div>
+    </div>
+
+    <div style="background: #2a2a3a; padding: 14px; border-radius: 6px; margin-top: 12px;">
+      <div style="color: #ef9a9a; font-weight: bold; margin-bottom: 6px;">RLS Policy Example (applied to every tenant-scoped table):</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.8;">
+        <div><span style="color: #ce93d8;">CREATE POLICY</span> tenant_isolation <span style="color: #ce93d8;">ON</span> schools</div>
+        <div>&nbsp;&nbsp;<span style="color: #ce93d8;">USING</span> (tenant_id = <span style="color: #81c784;">current_setting</span>(<span style="color: #ffb74d;">'app.tenant_id'</span>)::<span style="color: #64b5f6;">uuid</span>)</div>
+        <div>&nbsp;&nbsp;<span style="color: #ce93d8;">WITH CHECK</span> (tenant_id = <span style="color: #81c784;">current_setting</span>(<span style="color: #ffb74d;">'app.tenant_id'</span>)::<span style="color: #64b5f6;">uuid</span>);</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Core Entity Relationship Diagram</h3>
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+
+      <!-- Tenant & Config -->
+      <div>
+        <div style="color: #ffb74d; font-weight: bold; margin-bottom: 8px; font-size: 13px;">Platform Config</div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #ffb74d; margin-bottom: 8px;">
+          <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">tenants</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), name, slug<br>
+            plan_tier, status<br>
+            settings (JSONB)<br>
+            created_at, updated_at
+          </div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #ffb74d; margin-bottom: 8px;">
+          <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">tenant_modules</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            tenant_id (FK), module_id (FK)<br>
+            enabled, licensed_until<br>
+            max_users, config (JSONB)
+          </div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #ffb74d;">
+          <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">users</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK, = Supabase auth.uid)<br>
+            tenant_id (FK), role<br>
+            designation, email, phone<br>
+            is_active, notification_prefs
+          </div>
+        </div>
+      </div>
+
+      <!-- School & People -->
+      <div>
+        <div style="color: #64b5f6; font-weight: bold; margin-bottom: 8px; font-size: 13px;">School & People</div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #64b5f6; margin-bottom: 8px;">
+          <div style="color: #64b5f6; font-weight: bold; font-size: 11px;">schools</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id (FK)<br>
+            name, address, district<br>
+            geo_location, calendar_id<br>
+            donor_id (FK), status, year
+          </div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #81c784; margin-bottom: 8px;">
+          <div style="color: #81c784; font-weight: bold; font-size: 11px;">students</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id, unique_id<br>
+            school_id (FK), name<br>
+            grade, section, academic_year<br>
+            enrollment_date, is_active
+          </div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #ef9a9a; margin-bottom: 8px;">
+          <div style="color: #ef9a9a; font-weight: bold; font-size: 11px;">teachers</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id<br>
+            school_id (FK), name<br>
+            subject, rubric_level<br>
+            is_champion
+          </div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #4db6ac;">
+          <div style="color: #4db6ac; font-weight: bold; font-size: 11px;">donors</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id<br>
+            name, contact_info<br>
+            assigned_schools[]
+          </div>
+        </div>
+      </div>
+
+      <!-- Sessions & Tracking -->
+      <div>
+        <div style="color: #ce93d8; font-weight: bold; margin-bottom: 8px; font-size: 13px;">Sessions & Tracking</div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #ce93d8; margin-bottom: 8px;">
+          <div style="color: #ce93d8; font-weight: bold; font-size: 11px;">session_plans</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id<br>
+            school_id, trainer_id<br>
+            date, time_slot, topic<br>
+            status, approval_id (FK)
+          </div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #fff176; margin-bottom: 8px;">
+          <div style="color: #fff176; font-weight: bold; font-size: 11px;">session_attendance</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id<br>
+            session_id (FK), student_id<br>
+            is_present, trainer_present<br>
+            geo_lat, geo_lng, photo_url<br>
+            volunteer_name, volunteer_hrs
+          </div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #fff176; margin-bottom: 8px;">
+          <div style="color: #fff176; font-weight: bold; font-size: 11px;">non_session_attendance</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id<br>
+            trainer_id, date<br>
+            activity_type, duration_type<br>
+            start_time, end_time<br>
+            remarks, doc_url<br>
+            approval_id (FK)
+          </div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #f48fb1;">
+          <div style="color: #f48fb1; font-weight: bold; font-size: 11px;">assessments</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id<br>
+            student_id, template_id<br>
+            type (baseline/endline)<br>
+            omr_image_url, scores (JSONB)<br>
+            total_score, academic_year
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shared Services Tables -->
+    <div style="margin-top: 20px;">
+      <div style="color: #81c784; font-weight: bold; margin-bottom: 8px; font-size: 13px;">Shared Service Tables</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+        <div style="background: #1a3a2a; padding: 12px; border-radius: 6px; border: 1px dashed #81c784;">
+          <div style="color: #81c784; font-weight: bold; font-size: 11px;">approval_workflows</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id<br>
+            entity_type, entity_id<br>
+            current_step, status<br>
+            submitted_by, submitted_at<br>
+            decided_by, decided_at<br>
+            comments, audit_trail (JSONB)
+          </div>
+        </div>
+        <div style="background: #1a3a2a; padding: 12px; border-radius: 6px; border: 1px dashed #81c784;">
+          <div style="color: #81c784; font-weight: bold; font-size: 11px;">notifications</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id<br>
+            user_id, channel (in_app/whatsapp)<br>
+            type, title, body<br>
+            entity_type, entity_id<br>
+            is_read, sent_at
+          </div>
+        </div>
+        <div style="background: #1a3a2a; padding: 12px; border-radius: 6px; border: 1px dashed #81c784;">
+          <div style="color: #81c784; font-weight: bold; font-size: 11px;">audit_logs</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+            id (PK), tenant_id<br>
+            user_id, action<br>
+            entity_type, entity_id<br>
+            changes (JSONB)<br>
+            ip_address, timestamp
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Key Database Design Decisions</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #64b5f6;">
+      <div style="color: #64b5f6; font-weight: bold; margin-bottom: 6px;">tenant_id on EVERY table</div>
+      <div style="color: #ccc; font-size: 11px;">Even if it's derivable via joins. Enables simple RLS policies, avoids cross-table joins for security checks. Slight denormalization, massive security win.</div>
+      <div class="pros-cons" style="margin-top: 8px;">
+        <div class="pros"><h4 style="font-size: 10px;">Pro</h4><ul style="font-size: 10px;"><li>RLS policy is one line per table</li><li>No accidental cross-tenant joins</li></ul></div>
+        <div class="cons"><h4 style="font-size: 10px;">Con</h4><ul style="font-size: 10px;"><li>Redundant column on child tables</li></ul></div>
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #81c784;">
+      <div style="color: #81c784; font-weight: bold; margin-bottom: 6px;">JSONB for flexible fields</div>
+      <div style="color: #ccc; font-size: 11px;">Assessment scores, audit trails, tenant config overrides, and notification preferences use JSONB. Allows per-tenant customization without schema changes.</div>
+      <div class="pros-cons" style="margin-top: 8px;">
+        <div class="pros"><h4 style="font-size: 10px;">Pro</h4><ul style="font-size: 10px;"><li>Flexible per-tenant config</li><li>No migrations for new fields</li></ul></div>
+        <div class="cons"><h4 style="font-size: 10px;">Con</h4><ul style="font-size: 10px;"><li>No schema enforcement on JSONB</li><li>Validate at app layer</li></ul></div>
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #ffb74d;">
+      <div style="color: #ffb74d; font-weight: bold; margin-bottom: 6px;">Composite indexes for performance</div>
+      <div style="color: #ccc; font-size: 11px;">All frequently queried tables get <code>(tenant_id, ...)</code> composite indexes. E.g., <code>(tenant_id, trainer_id, date)</code> on attendance for daily lookups.</div>
+      <div class="pros-cons" style="margin-top: 8px;">
+        <div class="pros"><h4 style="font-size: 10px;">Pro</h4><ul style="font-size: 10px;"><li>Fast tenant-scoped queries</li><li>RLS filter is index-backed</li></ul></div>
+        <div class="cons"><h4 style="font-size: 10px;">Con</h4><ul style="font-size: 10px;"><li>More indexes = slower writes</li></ul></div>
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #ce93d8;">
+      <div style="color: #ce93d8; font-weight: bold; margin-bottom: 6px;">Soft deletes everywhere</div>
+      <div style="color: #ccc; font-size: 11px;">All entities use <code>deleted_at</code> timestamp instead of hard deletes. Required for audit compliance and data recovery. RLS policies filter out deleted rows by default.</div>
+      <div class="pros-cons" style="margin-top: 8px;">
+        <div class="pros"><h4 style="font-size: 10px;">Pro</h4><ul style="font-size: 10px;"><li>Full audit trail</li><li>Easy data recovery</li></ul></div>
+        <div class="cons"><h4 style="font-size: 10px;">Con</h4><ul style="font-size: 10px;"><li>Table bloat over time</li><li>Must filter in every query</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 12px; background: #1a2a3a; border-radius: 6px; border: 1px solid #64b5f6;">
+  <p style="color: #ccc; margin: 0; font-size: 13px;"><strong style="color: #64b5f6;">Review:</strong> Does this database design and tenant isolation approach look right? Next I'll cover the Workflow Engine and Approval system.</p>
+</div>
+</body></html>

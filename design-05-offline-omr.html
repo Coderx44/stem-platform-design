@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e0e0e0; padding: 32px; max-width: 1100px; margin: 0 auto; line-height: 1.5; }
+  h2 { color: #fff; font-size: 24px; margin-bottom: 4px; }
+  h3 { color: #ccc; font-size: 18px; margin-bottom: 12px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 20px; }
+  .section { margin-bottom: 24px; }
+  .options { display: flex; flex-direction: column; gap: 16px; }
+  .option { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; padding: 16px; cursor: pointer; display: flex; gap: 16px; }
+  .option:hover { border-color: #666; }
+  .option .letter { font-size: 24px; font-weight: bold; color: #64b5f6; min-width: 40px; }
+  .option .content { flex: 1; }
+  .option .content h3 { margin-top: 0; }
+  .option .content p { color: #aaa; font-size: 13px; }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .pros, .cons { padding: 8px; border-radius: 4px; }
+  .pros { background: rgba(129,199,132,0.1); }
+  .cons { background: rgba(239,154,154,0.1); }
+  .pros h4 { color: #81c784; font-size: 12px; margin-bottom: 4px; }
+  .cons h4 { color: #ef9a9a; font-size: 12px; margin-bottom: 4px; }
+  .pros ul, .cons ul { padding-left: 16px; font-size: 12px; color: #ccc; }
+  .pros li, .cons li { margin-bottom: 2px; }
+  a { color: #64b5f6; }
+  code { background: #2a2a3a; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; overflow: hidden; cursor: pointer; }
+  .card:hover { border-color: #666; }
+  .card-body { padding: 12px; }
+  .mock-nav { background: #2a2a3a; padding: 8px 16px; border-radius: 4px; margin-bottom: 8px; color: #888; }
+  .mock-sidebar { background: #1a1a2e; padding: 16px; min-width: 150px; border-radius: 4px; color: #666; }
+  .mock-content { background: #1a1a2e; padding: 16px; flex: 1; border-radius: 4px; color: #666; }
+  .mock-button { background: #64b5f6; color: #000; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+  .mock-input { background: #2a2a3a; border: 1px solid #444; padding: 8px; border-radius: 4px; color: #ccc; }
+  .placeholder { background: #2a2a3a; padding: 32px; border-radius: 4px; color: #666; text-align: center; }
+  .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+  .mockup { border: 1px solid #333; border-radius: 8px; overflow: hidden; }
+  .mockup-header { background: #2a2a3a; padding: 8px 16px; font-size: 12px; color: #888; }
+  .mockup-body { padding: 16px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .back-link { display: inline-block; margin-bottom: 20px; color: #64b5f6; text-decoration: none; font-size: 14px; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back-link">← Back to Index</a>
+<h2>Section 5: Offline Sync & OMR Processing Pipeline</h2>
+<p class="subtitle">Hybrid offline strategy for critical writes + OMR image processing pipeline</p>
+
+<div class="section">
+  <h3>Offline Sync Architecture</h3>
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+
+    <div style="text-align: center; margin-bottom: 16px; color: #ffb74d; font-weight: bold; font-size: 14px;">Mobile App — Offline-Capable Write Paths</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+      <div style="background: #1a3a2a; padding: 14px; border-radius: 6px; border: 1px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold; margin-bottom: 8px;">Works Offline (Local DB)</div>
+        <div style="font-size: 11px; color: #ccc; line-height: 1.8;">
+          &#10003; Session attendance marking<br>
+          &#10003; Non-session attendance logging<br>
+          &#10003; Assessment score entry<br>
+          &#10003; OMR photo capture (queued upload)<br>
+          &#10003; Session status (completed/cancelled)<br>
+          &#10003; Volunteer details entry
+        </div>
+      </div>
+      <div style="background: #2a2a3a; padding: 14px; border-radius: 6px; border: 1px solid #888;">
+        <div style="color: #888; font-weight: bold; margin-bottom: 8px;">Requires Connectivity</div>
+        <div style="font-size: 11px; color: #ccc; line-height: 1.8;">
+          &#10007; Approval workflows (submit/approve/reject)<br>
+          &#10007; Reports & dashboards<br>
+          &#10007; Session plan creation<br>
+          &#10007; Student bulk import<br>
+          &#10007; Admin/PM operations<br>
+          &#10007; Notification delivery
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 16px; color: #ce93d8; font-weight: bold; font-size: 13px;">Sync Flow</div>
+
+    <div style="display: flex; align-items: stretch; justify-content: center; gap: 8px; flex-wrap: wrap;">
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 11px; min-width: 130px;">
+        <div style="color: #64b5f6; font-weight: bold;">1. Trainer Action</div>
+        <div style="color: #888; margin-top: 4px;">Marks attendance</div>
+        <div style="color: #888;">on mobile app</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 11px; min-width: 130px;">
+        <div style="color: #81c784; font-weight: bold;">2. Local Write</div>
+        <div style="color: #888; margin-top: 4px;">Saved to SQLite /</div>
+        <div style="color: #888;">WatermelonDB</div>
+        <div style="color: #888;">+ sync queue</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 11px; min-width: 130px;">
+        <div style="color: #ffb74d; font-weight: bold;">3. Connectivity</div>
+        <div style="color: #888; margin-top: 4px;">App detects online</div>
+        <div style="color: #888;">Background sync</div>
+        <div style="color: #888;">triggers</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 11px; min-width: 130px;">
+        <div style="color: #ce93d8; font-weight: bold;">4. Push to Server</div>
+        <div style="color: #888; margin-top: 4px;">Batch sync API</div>
+        <div style="color: #888;">sends queued ops</div>
+        <div style="color: #888;">with timestamps</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #1a3a2a; padding: 12px; border-radius: 6px; text-align: center; font-size: 11px; min-width: 130px; border: 1px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold;">5. Reconcile</div>
+        <div style="color: #888; margin-top: 4px;">Server validates</div>
+        <div style="color: #888;">applies changes</div>
+        <div style="color: #888;">returns conflicts</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Conflict Resolution Strategy</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #81c784;">
+      <div style="color: #81c784; font-weight: bold; margin-bottom: 6px;">Why Conflicts Are Rare</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        - Trainers only edit <strong>their own</strong> attendance/data<br>
+        - Offline window is hours, not days<br>
+        - No two trainers edit the same student's attendance<br>
+        - Session attendance is per-trainer scope
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #ffb74d;">
+      <div style="color: #ffb74d; font-weight: bold; margin-bottom: 6px;">When Conflicts Occur</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        - PM edits an entry while trainer is offline editing same<br>
+        - Strategy: <strong>Last-write-wins with notification</strong><br>
+        - Server version wins; trainer gets notified of conflict<br>
+        - Conflict log stored for manual review
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; margin-top: 12px;">
+    <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+      <strong style="color: #64b5f6;">Sync Queue Record:</strong><br>
+      <code style="color: #888;">{ id, entity_type, entity_id, operation (create/update), payload, local_timestamp, synced: false, retry_count, conflict_status }</code>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 32px;">
+  <h3>OMR Processing Pipeline</h3>
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+
+    <div style="text-align: center; margin-bottom: 20px; color: #f48fb1; font-weight: bold; font-size: 14px;">OMR Scan → Score Flow</div>
+
+    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-bottom: 20px;">
+      <div style="background: #2a3a4a; padding: 12px 8px; border-radius: 6px; text-align: center; font-size: 10px;">
+        <div style="color: #64b5f6; font-weight: bold; font-size: 11px;">1. Capture</div>
+        <div style="color: #888; margin-top: 6px;">Trainer photographs OMR sheet via mobile camera</div>
+        <div style="margin-top: 6px; color: #81c784; font-size: 9px;">OFFLINE OK</div>
+      </div>
+      <div style="background: #2a3a4a; padding: 12px 8px; border-radius: 6px; text-align: center; font-size: 10px;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">2. Upload</div>
+        <div style="color: #888; margin-top: 6px;">Image queued locally, uploaded to S3 when online</div>
+        <div style="margin-top: 6px; color: #ffb74d; font-size: 9px;">NEEDS SYNC</div>
+      </div>
+      <div style="background: #2a3a4a; padding: 12px 8px; border-radius: 6px; text-align: center; font-size: 10px;">
+        <div style="color: #ce93d8; font-weight: bold; font-size: 11px;">3. Queue</div>
+        <div style="color: #888; margin-top: 6px;">Backend receives upload, creates processing job in Redis queue</div>
+        <div style="margin-top: 6px; color: #ce93d8; font-size: 9px;">ASYNC</div>
+      </div>
+      <div style="background: #2a3a4a; padding: 12px 8px; border-radius: 6px; text-align: center; font-size: 10px;">
+        <div style="color: #f48fb1; font-weight: bold; font-size: 11px;">4. Process</div>
+        <div style="color: #888; margin-top: 6px;">OMR worker reads image, detects bubbles, extracts answers</div>
+        <div style="margin-top: 6px; color: #f48fb1; font-size: 9px;">WORKER</div>
+      </div>
+      <div style="background: #2a3a4a; padding: 12px 8px; border-radius: 6px; text-align: center; font-size: 10px;">
+        <div style="color: #81c784; font-weight: bold; font-size: 11px;">5. Score</div>
+        <div style="color: #888; margin-top: 6px;">Compare answers vs template answer key, compute scores</div>
+        <div style="margin-top: 6px; color: #81c784; font-size: 9px;">AUTO</div>
+      </div>
+      <div style="background: #1a3a2a; padding: 12px 8px; border-radius: 6px; text-align: center; font-size: 10px; border: 1px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold; font-size: 11px;">6. Result</div>
+        <div style="color: #888; margin-top: 6px;">Scores saved, linked to student, trainer notified</div>
+        <div style="margin-top: 6px; color: #81c784; font-size: 9px;">COMPLETE</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 16px; color: #888;">── OMR Processing Detail ──</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+      <div style="background: #2a2a3a; padding: 14px; border-radius: 6px;">
+        <div style="color: #f48fb1; font-weight: bold; font-size: 11px; margin-bottom: 8px;">Assessment Template</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.8;">
+          Created by Admin:<br>
+          - Name, grade, subject<br>
+          - Number of questions<br>
+          - Answer key (array)<br>
+          - Subject/skill mapping per Q<br>
+          - Scoring rubric (marks per Q)<br>
+          - OMR layout config
+        </div>
+      </div>
+      <div style="background: #2a2a3a; padding: 14px; border-radius: 6px;">
+        <div style="color: #f48fb1; font-weight: bold; font-size: 11px; margin-bottom: 8px;">Image Processing</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.8;">
+          OMR Worker pipeline:<br>
+          1. Download image from S3<br>
+          2. Perspective correction<br>
+          3. Detect registration marks<br>
+          4. Identify bubble grid<br>
+          5. Threshold + detect filled bubbles<br>
+          6. Map to answer array<br>
+          7. Confidence score per answer
+        </div>
+      </div>
+      <div style="background: #2a2a3a; padding: 14px; border-radius: 6px;">
+        <div style="color: #f48fb1; font-weight: bold; font-size: 11px; margin-bottom: 8px;">Error Handling</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.8;">
+          When processing fails:<br>
+          - Low confidence → flag for manual review<br>
+          - Unreadable image → notify trainer to re-scan<br>
+          - Partial read → save what's readable, flag rest<br>
+          - Retry up to 3 times<br>
+          - Manual override always available<br>
+          - All results reviewable before finalization
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>OMR Processing — Technology Options</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #64b5f6;">
+      <div style="color: #64b5f6; font-weight: bold; margin-bottom: 6px;">Option A: OpenCV + Custom Pipeline</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        Use opencv-js or Python OpenCV worker.<br>
+        Full control over processing pipeline.<br>
+        Well-documented for OMR use cases.
+      </div>
+      <div class="pros-cons" style="margin-top: 8px;">
+        <div class="pros"><h4 style="font-size: 10px;">Pro</h4><ul style="font-size: 10px;"><li>No external dependency</li><li>Customizable per template</li></ul></div>
+        <div class="cons"><h4 style="font-size: 10px;">Con</h4><ul style="font-size: 10px;"><li>More development effort</li><li>Need to handle edge cases</li></ul></div>
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #81c784;">
+      <div style="color: #81c784; font-weight: bold; margin-bottom: 6px;">Option B: OMRChecker (Open Source)</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        Open-source OMR processing library.<br>
+        Wrap as a microservice/worker.<br>
+        Battle-tested for education use cases.
+      </div>
+      <div class="pros-cons" style="margin-top: 8px;">
+        <div class="pros"><h4 style="font-size: 10px;">Pro</h4><ul style="font-size: 10px;"><li>Faster to ship</li><li>Education-focused</li></ul></div>
+        <div class="cons"><h4 style="font-size: 10px;">Con</h4><ul style="font-size: 10px;"><li>Python dependency</li><li>May need customization</li></ul></div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 12px; padding: 12px; background: #2a2a3a; border-radius: 6px;">
+    <div style="color: #ccc; font-size: 12px;">
+      <strong style="color: #ffb74d;">Recommendation:</strong> Start with <strong>Option B (OMRChecker)</strong> wrapped as a Python microservice behind the Redis job queue. It's purpose-built for education OMR sheets and will get you to production faster. Migrate to a custom pipeline only if OMRChecker can't handle your specific template formats.
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 12px; background: #1a2a3a; border-radius: 6px; border: 1px solid #64b5f6;">
+  <p style="color: #ccc; margin: 0; font-size: 13px;"><strong style="color: #64b5f6;">Review:</strong> Does the offline sync strategy and OMR pipeline look right? Next: Notification System and Role-Based Access Control.</p>
+</div>
+</body></html>

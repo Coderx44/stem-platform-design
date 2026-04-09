@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e0e0e0; padding: 32px; max-width: 1100px; margin: 0 auto; line-height: 1.5; }
+  h2 { color: #fff; font-size: 24px; margin-bottom: 4px; }
+  h3 { color: #ccc; font-size: 18px; margin-bottom: 12px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 20px; }
+  .section { margin-bottom: 24px; }
+  .options { display: flex; flex-direction: column; gap: 16px; }
+  .option { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; padding: 16px; cursor: pointer; display: flex; gap: 16px; }
+  .option:hover { border-color: #666; }
+  .option .letter { font-size: 24px; font-weight: bold; color: #64b5f6; min-width: 40px; }
+  .option .content { flex: 1; }
+  .option .content h3 { margin-top: 0; }
+  .option .content p { color: #aaa; font-size: 13px; }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .pros, .cons { padding: 8px; border-radius: 4px; }
+  .pros { background: rgba(129,199,132,0.1); }
+  .cons { background: rgba(239,154,154,0.1); }
+  .pros h4 { color: #81c784; font-size: 12px; margin-bottom: 4px; }
+  .cons h4 { color: #ef9a9a; font-size: 12px; margin-bottom: 4px; }
+  .pros ul, .cons ul { padding-left: 16px; font-size: 12px; color: #ccc; }
+  .pros li, .cons li { margin-bottom: 2px; }
+  a { color: #64b5f6; }
+  code { background: #2a2a3a; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; overflow: hidden; cursor: pointer; }
+  .card:hover { border-color: #666; }
+  .card-body { padding: 12px; }
+  .mock-nav { background: #2a2a3a; padding: 8px 16px; border-radius: 4px; margin-bottom: 8px; color: #888; }
+  .mock-sidebar { background: #1a1a2e; padding: 16px; min-width: 150px; border-radius: 4px; color: #666; }
+  .mock-content { background: #1a1a2e; padding: 16px; flex: 1; border-radius: 4px; color: #666; }
+  .mock-button { background: #64b5f6; color: #000; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+  .mock-input { background: #2a2a3a; border: 1px solid #444; padding: 8px; border-radius: 4px; color: #ccc; }
+  .placeholder { background: #2a2a3a; padding: 32px; border-radius: 4px; color: #666; text-align: center; }
+  .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+  .mockup { border: 1px solid #333; border-radius: 8px; overflow: hidden; }
+  .mockup-header { background: #2a2a3a; padding: 8px 16px; font-size: 12px; color: #888; }
+  .mockup-body { padding: 16px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .back-link { display: inline-block; margin-bottom: 20px; color: #64b5f6; text-decoration: none; font-size: 14px; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back-link">← Back to Index</a>
+<h2>Section 6: Notifications & Role-Based Access Control</h2>
+<p class="subtitle">Multi-channel notification hub + hierarchical RBAC with module-level gating</p>
+
+<div class="section">
+  <h3>Notification System Architecture</h3>
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+
+    <div style="text-align: center; margin-bottom: 16px; color: #ffb74d; font-weight: bold; font-size: 14px;">Notification Hub — Event-Driven Delivery</div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 12px; align-items: stretch;">
+
+      <!-- Event Sources -->
+      <div>
+        <div style="color: #ce93d8; font-weight: bold; margin-bottom: 8px; text-align: center; font-size: 11px;">Event Sources</div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Workflow transitions</div>
+          <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Attendance not logged</div>
+          <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">OMR processing complete</div>
+          <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Escalation triggers</div>
+          <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Admin announcements</div>
+          <div style="background: #2a2a4a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Cron-based reminders</div>
+        </div>
+      </div>
+
+      <!-- Hub -->
+      <div style="background: #1a3a2a; padding: 16px; border-radius: 6px; border: 1px solid #81c784; display: flex; flex-direction: column; justify-content: center;">
+        <div style="color: #81c784; font-weight: bold; text-align: center; font-size: 14px; margin-bottom: 12px;">Notification Hub</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="background: #2a4a2a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc;">
+            <strong style="color: #81c784;">1.</strong> Receive event from internal event bus
+          </div>
+          <div style="background: #2a4a2a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc;">
+            <strong style="color: #81c784;">2.</strong> Resolve recipients (role → users for tenant)
+          </div>
+          <div style="background: #2a4a2a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc;">
+            <strong style="color: #81c784;">3.</strong> Check user notification preferences
+          </div>
+          <div style="background: #2a4a2a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc;">
+            <strong style="color: #81c784;">4.</strong> Route to enabled channels per user pref
+          </div>
+          <div style="background: #2a4a2a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc;">
+            <strong style="color: #81c784;">5.</strong> Queue delivery jobs (Redis)
+          </div>
+        </div>
+      </div>
+
+      <!-- Channels -->
+      <div>
+        <div style="color: #64b5f6; font-weight: bold; margin-bottom: 8px; text-align: center; font-size: 11px;">Delivery Channels</div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="background: #2a3a4a; padding: 10px; border-radius: 4px; text-align: center; font-size: 10px; border: 1px solid #64b5f6;">
+            <div style="color: #64b5f6; font-weight: bold;">In-App</div>
+            <div style="color: #888; margin-top: 2px;">Bell icon + notification center</div>
+            <div style="color: #888;">Real-time via WebSocket</div>
+          </div>
+          <div style="background: #2a3a4a; padding: 10px; border-radius: 4px; text-align: center; font-size: 10px; border: 1px solid #81c784;">
+            <div style="color: #81c784; font-weight: bold;">Push (FCM)</div>
+            <div style="color: #888; margin-top: 2px;">Mobile push notifications</div>
+            <div style="color: #888;">Firebase Cloud Messaging</div>
+          </div>
+          <div style="background: #2a3a4a; padding: 10px; border-radius: 4px; text-align: center; font-size: 10px; border: 1px solid #4db6ac;">
+            <div style="color: #4db6ac; font-weight: bold;">WhatsApp (Twilio)</div>
+            <div style="color: #888; margin-top: 2px;">Template-based messages</div>
+            <div style="color: #888;">Approval alerts, reminders</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Notification Types & Channel Mapping</h3>
+  <div style="display: grid; grid-template-columns: 1fr; gap: 2px; background: #1a1a2e; border-radius: 8px; overflow: hidden;">
+    <div style="display: grid; grid-template-columns: 250px 100px 80px 80px 80px 1fr; gap: 0; background: #2a2a4a; padding: 10px 12px; font-size: 11px; font-weight: bold; color: #aaa;">
+      <div>Notification</div>
+      <div>Recipient</div>
+      <div style="text-align: center;">In-App</div>
+      <div style="text-align: center;">Push</div>
+      <div style="text-align: center;">WhatsApp</div>
+      <div>Trigger</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 100px 80px 80px 80px 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>New approval pending</div>
+      <div style="color: #ffb74d;">PM</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="color: #888;">Workflow submitted</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 100px 80px 80px 80px 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Entry approved / rejected</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="color: #888;">Workflow decided</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 100px 80px 80px 80px 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Attendance not logged today</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="color: #888;">Cron (6 PM daily)</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 100px 80px 80px 80px 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Approval pending > 48hrs</div>
+      <div style="color: #ffb74d;">PM</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="color: #888;">Escalation cron</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 100px 80px 80px 80px 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Trainer no log for X days</div>
+      <div style="color: #ffb74d;">PM</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="color: #888;">Cron daily</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 100px 80px 80px 80px 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>OMR processing complete</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="color: #888;">OMR worker event</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 100px 80px 80px 80px 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Admin announcement</div>
+      <div style="color: #ccc;">All</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="color: #888;">Admin action</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 100px 80px 80px 80px 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Cancellation rate > 30%</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="color: #888;">Cron weekly</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 12px; padding: 12px; background: #2a2a3a; border-radius: 6px;">
+    <div style="color: #ccc; font-size: 12px;">
+      <strong style="color: #ffb74d;">User Preferences:</strong> Each user has a <code>notification_preferences</code> JSONB field. They can toggle individual notification types per channel. Defaults are set at tenant level, users can override. The Hub respects: <code>user pref > tenant default > system default</code>.
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 32px;">
+  <h3>Role-Based Access Control (RBAC)</h3>
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+
+    <div style="text-align: center; margin-bottom: 16px; color: #ce93d8; font-weight: bold; font-size: 14px;">Role Hierarchy</div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; margin-bottom: 20px;">
+      <div style="background: #3a1a1a; padding: 10px 40px; border-radius: 6px; text-align: center; border: 2px solid #ef9a9a; min-width: 280px;">
+        <div style="color: #ef9a9a; font-weight: bold; font-size: 13px;">Admin (Level 4)</div>
+        <div style="color: #888; font-size: 10px; margin-top: 2px;">Regional Manager, Director</div>
+        <div style="color: #888; font-size: 10px;">Full system control. All modules. All tenants (super-admin).</div>
+      </div>
+      <div style="color: #888;">▲ escalation</div>
+      <div style="background: #2a2a3a; padding: 10px 40px; border-radius: 6px; text-align: center; border: 2px solid #4db6ac; min-width: 280px;">
+        <div style="color: #4db6ac; font-weight: bold; font-size: 13px;">Donor (Level 3)</div>
+        <div style="color: #888; font-size: 10px; margin-top: 2px;">View-only access to assigned schools</div>
+        <div style="color: #888; font-size: 10px;">Dashboards, reports, school impact.</div>
+      </div>
+      <div style="color: #888;">▲</div>
+      <div style="background: #2a2a3a; padding: 10px 40px; border-radius: 6px; text-align: center; border: 2px solid #ffb74d; min-width: 280px;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 13px;">Project Manager (Level 2)</div>
+        <div style="color: #888; font-size: 10px; margin-top: 2px;">Cluster Lead, Cluster Manager</div>
+        <div style="color: #888; font-size: 10px;">Approvals, monitoring, trainer management, reports.</div>
+      </div>
+      <div style="color: #888;">▲</div>
+      <div style="background: #1a3a2a; padding: 10px 40px; border-radius: 6px; text-align: center; border: 2px solid #81c784; min-width: 280px;">
+        <div style="color: #81c784; font-weight: bold; font-size: 13px;">Trainer (Level 1)</div>
+        <div style="color: #888; font-size: 10px; margin-top: 2px;">Field staff</div>
+        <div style="color: #888; font-size: 10px;">Attendance, assessments, session planning, data entry.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Permission Matrix</h3>
+  <div style="display: grid; grid-template-columns: 1fr; gap: 2px; background: #1a1a2e; border-radius: 8px; overflow: hidden; font-size: 10px;">
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #2a2a4a; padding: 8px 12px; font-weight: bold; color: #aaa; font-size: 11px;">
+      <div>Action</div>
+      <div style="text-align: center; color: #81c784;">Trainer</div>
+      <div style="text-align: center; color: #ffb74d;">Proj. Manager</div>
+      <div style="text-align: center; color: #4db6ac;">Donor</div>
+      <div style="text-align: center; color: #ef9a9a;">Admin</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>Mark session attendance</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">view</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Log non-session activity</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">view</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>Approve/reject entries</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Create session plans</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>Upload student data</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>View dashboards/reports</div>
+      <div style="text-align: center; color: #81c784;">own</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">assigned</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>Manage school details</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Manage trainers</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>Set targets & config</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Module & license config</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Access Control Implementation</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #64b5f6;">
+      <div style="color: #64b5f6; font-weight: bold; margin-bottom: 6px;">3 Layers of Access Control</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.8;">
+        <strong style="color: #ffb74d;">Layer 1 — RLS (DB):</strong> Tenant isolation. No cross-tenant access possible.<br>
+        <strong style="color: #ffb74d;">Layer 2 — Module Gating (Middleware):</strong> Licensed modules only. 403 if not licensed.<br>
+        <strong style="color: #ffb74d;">Layer 3 — Role Permissions (Controller):</strong> Action-level checks. Role must have permission for specific operation.
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #81c784;">
+      <div style="color: #81c784; font-weight: bold; margin-bottom: 6px;">Data Scoping</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.8;">
+        <strong style="color: #ffb74d;">Trainer:</strong> Sees only their assigned schools + own data<br>
+        <strong style="color: #ffb74d;">Project Manager:</strong> Sees all trainers + schools in their cluster<br>
+        <strong style="color: #ffb74d;">Donor:</strong> Sees only their assigned/funded schools<br>
+        <strong style="color: #ffb74d;">Admin:</strong> Sees everything within the tenant
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Per-Tenant Permission Overrides</h3>
+  <p class="subtitle">Role types are system-defined, but permissions are configurable per tenant</p>
+
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+
+    <div style="text-align: center; margin-bottom: 16px; color: #ffb74d; font-weight: bold; font-size: 14px;">Permission Resolution Flow</div>
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+      <div style="background: #2a3a4a; padding: 10px 16px; border-radius: 6px; text-align: center; font-size: 11px; min-width: 140px;">
+        <div style="color: #64b5f6; font-weight: bold;">System Defaults</div>
+        <div style="color: #888; margin-top: 4px; font-size: 10px;">role_default_permissions</div>
+        <div style="color: #888; font-size: 10px;">e.g. Trainer: mark_attendance ✓</div>
+      </div>
+      <div style="color: #888;">→ merge →</div>
+      <div style="background: #3a2a1a; padding: 10px 16px; border-radius: 6px; text-align: center; font-size: 11px; min-width: 140px; border: 1px solid #ffb74d;">
+        <div style="color: #ffb74d; font-weight: bold;">Tenant Overrides</div>
+        <div style="color: #888; margin-top: 4px; font-size: 10px;">tenant_role_overrides</div>
+        <div style="color: #888; font-size: 10px;">e.g. Trainer: create_session ✗</div>
+      </div>
+      <div style="color: #888;">→ cache →</div>
+      <div style="background: #1a3a2a; padding: 10px 16px; border-radius: 6px; text-align: center; font-size: 11px; min-width: 140px; border: 1px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold;">Effective Permissions</div>
+        <div style="color: #888; margin-top: 4px; font-size: 10px;">Redis/in-memory cached</div>
+        <div style="color: #888; font-size: 10px;">per tenant + role</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 16px; color: #888;">── Data Model ──</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #64b5f6;">
+        <div style="color: #64b5f6; font-weight: bold; font-size: 11px;">permissions</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+          id, key, module_id, description<br>
+          <span style="color: #666;">e.g. "mark_attendance", "approve_entries", "create_session", "view_reports"</span>
+        </div>
+      </div>
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold; font-size: 11px;">role_default_permissions</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+          role, permission_id, granted<br>
+          <span style="color: #666;">System-wide defaults. Works out of the box for new tenants.</span>
+        </div>
+      </div>
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #ffb74d;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">tenant_role_overrides</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">
+          tenant_id, role, permission_id, granted<br>
+          <span style="color: #666;">Sparse — only stores exceptions to defaults.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 16px; color: #888;">── Example: Two Tenants, Same Role, Different Permissions ──</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px;">
+        <div style="color: #4db6ac; font-weight: bold; font-size: 11px; margin-bottom: 6px;">Tenant A — "NGO Alpha" (uses defaults)</div>
+        <div style="font-size: 10px; color: #ccc; line-height: 1.8;">
+          Trainer can: mark attendance ✓, create sessions ✓, upload students ✓<br>
+          <span style="color: #888;">(No overrides — system defaults apply)</span>
+        </div>
+      </div>
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px;">
+        <div style="color: #ce93d8; font-weight: bold; font-size: 11px; margin-bottom: 6px;">Tenant B — "NGO Beta" (custom overrides)</div>
+        <div style="font-size: 10px; color: #ccc; line-height: 1.8;">
+          Trainer can: mark attendance ✓, create sessions <span style="color: #ef9a9a;">✗</span>, upload students <span style="color: #ef9a9a;">✗</span><br>
+          <span style="color: #888;">(2 overrides in tenant_role_overrides)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 12px; padding: 12px; background: #2a2a3a; border-radius: 6px;">
+    <div style="color: #ccc; font-size: 12px;">
+      <strong style="color: #ffb74d;">Why this approach:</strong> Roles are system-defined (Trainer, PM, Donor, Admin) — tenants don't create custom role types. But each tenant can toggle specific permissions on/off per role. The <code>tenant_role_overrides</code> table is sparse (only stores exceptions), keeping it simple. New tenants work out of the box with system defaults. Admin configures overrides via a settings UI.
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 12px; background: #1a2a3a; border-radius: 6px; border: 1px solid #64b5f6;">
+  <p style="color: #ccc; margin: 0; font-size: 13px;"><strong style="color: #64b5f6;">Review:</strong> Does the notification system and RBAC design look right? Next and final section: Reporting & Analytics module.</p>
+</div>
+</body></html>

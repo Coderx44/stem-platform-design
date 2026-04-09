@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e0e0e0; padding: 32px; max-width: 1100px; margin: 0 auto; line-height: 1.5; }
+  h2 { color: #fff; font-size: 24px; margin-bottom: 4px; }
+  h3 { color: #ccc; font-size: 18px; margin-bottom: 12px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 20px; }
+  .section { margin-bottom: 24px; }
+  .options { display: flex; flex-direction: column; gap: 16px; }
+  .option { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; padding: 16px; cursor: pointer; display: flex; gap: 16px; }
+  .option:hover { border-color: #666; }
+  .option .letter { font-size: 24px; font-weight: bold; color: #64b5f6; min-width: 40px; }
+  .option .content { flex: 1; }
+  .option .content h3 { margin-top: 0; }
+  .option .content p { color: #aaa; font-size: 13px; }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .pros, .cons { padding: 8px; border-radius: 4px; }
+  .pros { background: rgba(129,199,132,0.1); }
+  .cons { background: rgba(239,154,154,0.1); }
+  .pros h4 { color: #81c784; font-size: 12px; margin-bottom: 4px; }
+  .cons h4 { color: #ef9a9a; font-size: 12px; margin-bottom: 4px; }
+  .pros ul, .cons ul { padding-left: 16px; font-size: 12px; color: #ccc; }
+  .pros li, .cons li { margin-bottom: 2px; }
+  a { color: #64b5f6; }
+  code { background: #2a2a3a; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; overflow: hidden; cursor: pointer; }
+  .card:hover { border-color: #666; }
+  .card-body { padding: 12px; }
+  .mock-nav { background: #2a2a3a; padding: 8px 16px; border-radius: 4px; margin-bottom: 8px; color: #888; }
+  .mock-sidebar { background: #1a1a2e; padding: 16px; min-width: 150px; border-radius: 4px; color: #666; }
+  .mock-content { background: #1a1a2e; padding: 16px; flex: 1; border-radius: 4px; color: #666; }
+  .mock-button { background: #64b5f6; color: #000; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+  .mock-input { background: #2a2a3a; border: 1px solid #444; padding: 8px; border-radius: 4px; color: #ccc; }
+  .placeholder { background: #2a2a3a; padding: 32px; border-radius: 4px; color: #666; text-align: center; }
+  .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+  .mockup { border: 1px solid #333; border-radius: 8px; overflow: hidden; }
+  .mockup-header { background: #2a2a3a; padding: 8px 16px; font-size: 12px; color: #888; }
+  .mockup-body { padding: 16px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .back-link { display: inline-block; margin-bottom: 20px; color: #64b5f6; text-decoration: none; font-size: 14px; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back-link">← Back to Index</a>
+<h2>Section 7: Reporting & Analytics — Two Approaches</h2>
+<p class="subtitle">Approach A: Traditional dashboards with materialized views — Approach B: AI-powered natural language query engine</p>
+
+<div style="padding: 12px; background: #2a2a3a; border-radius: 6px; margin-bottom: 24px;">
+  <p style="color: #ccc; margin: 0; font-size: 12px;"><strong style="color: #ffb74d;">Decision pending:</strong> Both approaches are viable and can coexist. Review trade-offs below — we'll finalize which to prioritize (or combine) later.</p>
+</div>
+
+<!-- ============ APPROACH A ============ -->
+
+<div class="section" style="border: 2px solid #64b5f6; border-radius: 8px; padding: 16px;">
+  <h3 style="color: #64b5f6; margin-top: 0;">Approach A: Traditional Dashboards + Materialized Views</h3>
+  <p class="subtitle">Pre-built dashboards, scheduled aggregation, structured export</p>
+
+  <div style="padding: 16px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+    <div style="text-align: center; margin-bottom: 16px; color: #64b5f6; font-weight: bold; font-size: 13px;">Architecture</div>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px;">
+        <div style="color: #64b5f6; font-weight: bold; font-size: 11px;">Data Sources</div>
+        <div style="color: #888; margin-top: 6px;">Attendance, assessments, sessions, rubrics, leave — all tenant-scoped via RLS</div>
+      </div>
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">Aggregation</div>
+        <div style="color: #888; margin-top: 6px;">Materialized views pre-compute metrics. Cron refreshes nightly.</div>
+      </div>
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px;">
+        <div style="color: #ce93d8; font-weight: bold; font-size: 11px;">Report Engine</div>
+        <div style="color: #888; margin-top: 6px;">Role scoping, date filters, group-by. Feeds dashboard API.</div>
+      </div>
+      <div style="background: #1a3a2a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; border: 1px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold; font-size: 11px;">Output</div>
+        <div style="color: #888; margin-top: 6px;">Charts, tables, PDF reports, Excel downloads</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <div style="font-size: 12px; color: #ccc; font-weight: bold; margin-bottom: 8px;">Pre-built Dashboards (10):</div>
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;">
+      <div style="background: #2a2a3a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Trainer Utilization</div>
+      <div style="background: #2a2a3a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Attendance</div>
+      <div style="background: #2a2a3a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Leave Summary</div>
+      <div style="background: #2a2a3a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Student Improvement</div>
+      <div style="background: #2a2a3a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">School RAG</div>
+      <div style="background: #2a2a3a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Teacher Readiness</div>
+      <div style="background: #2a2a3a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Monthly Productivity</div>
+      <div style="background: #2a2a3a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Donor Impact</div>
+      <div style="background: #2a2a3a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Volunteer Report</div>
+      <div style="background: #2a2a3a; padding: 8px; border-radius: 4px; text-align: center; font-size: 10px; color: #ccc;">Trainer Competency</div>
+    </div>
+  </div>
+
+  <div class="pros-cons" style="margin-top: 16px;">
+    <div class="pros">
+      <h4>Pros</h4>
+      <ul>
+        <li>Predictable, consistent output — same dashboard every time</li>
+        <li>Fast loads (pre-computed materialized views)</li>
+        <li>No LLM cost per query</li>
+        <li>Easy to test and validate correctness</li>
+        <li>Works without internet (cached dashboards on mobile)</li>
+        <li>Familiar UX for NGO staff</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Cons</h4>
+      <ul>
+        <li>Every new report = new dev work (design, query, UI)</li>
+        <li>Can't answer ad-hoc questions</li>
+        <li>Heavy upfront build — 10 dashboards is significant frontend effort</li>
+        <li>Data up to 24hrs stale (mat. view refresh cycle)</li>
+        <li>Users stuck with what's built — no self-service</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APPROACH B ============ -->
+
+<div class="section" style="border: 2px solid #ce93d8; border-radius: 8px; padding: 16px; margin-top: 24px;">
+  <h3 style="color: #ce93d8; margin-top: 0;">Approach B: AI-Powered Natural Language Query Engine</h3>
+  <p class="subtitle">Users ask questions in plain English → system generates SQL → returns charts & tables. Based on KindKart's proven NL query system.</p>
+
+  <div style="padding: 16px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+    <div style="text-align: center; margin-bottom: 16px; color: #ce93d8; font-weight: bold; font-size: 13px;">Architecture (Proven in KindKart)</div>
+
+    <div style="display: flex; align-items: stretch; justify-content: center; gap: 6px; flex-wrap: wrap;">
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; min-width: 110px;">
+        <div style="color: #64b5f6; font-weight: bold; font-size: 11px;">1. User Query</div>
+        <div style="color: #888; margin-top: 4px;">"Show me trainer utilization for last month"</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; min-width: 110px;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">2. Schema Context</div>
+        <div style="color: #888; margin-top: 4px;">Keyword match → load relevant domain schema docs</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #3a2a3a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; min-width: 110px; border: 1px solid #ce93d8;">
+        <div style="color: #ce93d8; font-weight: bold; font-size: 11px;">3. LLM Call</div>
+        <div style="color: #888; margin-top: 4px;">Schema + query → SQL + chart type + columns</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; min-width: 110px;">
+        <div style="color: #ef9a9a; font-weight: bold; font-size: 11px;">4. Validate SQL</div>
+        <div style="color: #888; margin-top: 4px;">Table whitelist, no DML, no params, no injection</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">→</div>
+      <div style="background: #1a3a2a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; min-width: 110px; border: 1px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold; font-size: 11px;">5. Execute & Render</div>
+        <div style="color: #888; margin-top: 4px;">Run SQL, return chart (table/bar/line/pie/kpi)</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px; padding: 16px; background: #1a1a2e; border-radius: 8px;">
+    <div style="color: #ce93d8; font-weight: bold; margin-bottom: 12px; font-size: 13px;">Key Components</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px; margin-bottom: 6px;">Schema Docs (Embedded)</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.6;">
+          Markdown files per domain:<br>
+          - Table names, column types<br>
+          - Join relationships<br>
+          - Common query patterns<br>
+          - Enum values, status codes<br>
+          - Compiled into binary at build<br>
+          <br>
+          <strong style="color: #ccc;">Keyword routing:</strong> "trainer", "utilization" → loads trainer + attendance schema docs
+        </div>
+      </div>
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px; margin-bottom: 6px;">SQL Validator (Security)</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.6;">
+          Before execution, validate:<br>
+          - Table whitelist (40+ allowed)<br>
+          - Block sensitive tables (auth, tokens)<br>
+          - No INSERT/UPDATE/DELETE/DROP<br>
+          - No positional parameters ($1)<br>
+          - No hardcoded strings in SELECT<br>
+          - Inject tenant_id WHERE clause<br>
+          <br>
+          <strong style="color: #ef9a9a;">Jailbreak prevention built-in</strong>
+        </div>
+      </div>
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px; margin-bottom: 6px;">Chart Renderer</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.6;">
+          LLM returns chart metadata:<br>
+          - chartType: table/bar/line/pie/kpi/gauge<br>
+          - column definitions (key, label, type)<br>
+          - Row data as arrays<br>
+          - Chart name<br>
+          <br>
+          Frontend renders using chart library.<br>
+          Results persisted → reusable dashboards.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px; padding: 16px; background: #1a1a2e; border-radius: 8px;">
+    <div style="color: #ce93d8; font-weight: bold; margin-bottom: 12px; font-size: 13px;">Multi-Tenant Adaptations for STEM</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px;">
+        <div style="color: #81c784; font-weight: bold; font-size: 11px; margin-bottom: 6px;">Tenant Isolation in NL Queries</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.6;">
+          - Every generated SQL gets <code>tenant_id = ?</code> injected automatically<br>
+          - RLS provides second layer of protection<br>
+          - Role-based query scoping: Trainers can only query their own data, PMs their cluster, Donors their assigned schools<br>
+          - Table whitelist is tenant-configurable (based on licensed modules)
+        </div>
+      </div>
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px;">
+        <div style="color: #81c784; font-weight: bold; font-size: 11px; margin-bottom: 6px;">Module-Aware Schema Loading</div>
+        <div style="font-size: 10px; color: #888; line-height: 1.6;">
+          - Schema docs only loaded for modules the tenant has licensed<br>
+          - If tenant doesn't have Assessment module, LLM never sees assessment tables<br>
+          - Prevents queries about unlicensed features<br>
+          - Reduces prompt size → faster, cheaper LLM calls
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <div style="font-size: 12px; color: #ccc; font-weight: bold; margin-bottom: 8px;">Example Queries Users Can Ask:</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+      <div style="background: #2a2a3a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc; font-style: italic;">"Show attendance rate by school for March 2026"</div>
+      <div style="background: #2a2a3a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc; font-style: italic;">"Which trainers have logged less than 3 days this week?"</div>
+      <div style="background: #2a2a3a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc; font-style: italic;">"Compare baseline vs endline scores for Grade 5 science"</div>
+      <div style="background: #2a2a3a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc; font-style: italic;">"Top 5 schools by student improvement percentage"</div>
+      <div style="background: #2a2a3a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc; font-style: italic;">"Monthly leave breakdown for all trainers in Cluster A"</div>
+      <div style="background: #2a2a3a; padding: 8px 12px; border-radius: 4px; font-size: 10px; color: #ccc; font-style: italic;">"RAG status of all schools with donor XYZ"</div>
+    </div>
+  </div>
+
+  <div class="pros-cons" style="margin-top: 16px;">
+    <div class="pros">
+      <h4>Pros</h4>
+      <ul>
+        <li>Self-service — users get answers without dev work</li>
+        <li>Infinite report variety from day one</li>
+        <li>Proven architecture (running in KindKart production)</li>
+        <li>Dramatically less frontend work — one query UI, one chart renderer</li>
+        <li>Handles ad-hoc questions that pre-built dashboards can't</li>
+        <li>Schema docs double as documentation</li>
+        <li>Module-aware: only shows data for licensed modules</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Cons</h4>
+      <ul>
+        <li>LLM cost per query (API calls to AI service)</li>
+        <li>Response latency (2-5s per query vs instant dashboard)</li>
+        <li>Non-deterministic — same question may produce slightly different SQL</li>
+        <li>Requires good schema docs for accurate results</li>
+        <li>Complex queries may produce incorrect SQL</li>
+        <li>Requires internet (can't work offline)</li>
+        <li>Security surface area (SQL injection via LLM — mitigated by validator)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ COMPARISON ============ -->
+
+<div class="section" style="margin-top: 32px;">
+  <h3>Head-to-Head Comparison</h3>
+  <div style="display: grid; grid-template-columns: 1fr; gap: 2px; background: #1a1a2e; border-radius: 8px; overflow: hidden;">
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #2a2a4a; padding: 10px 12px; font-size: 11px; font-weight: bold; color: #aaa;">
+      <div>Dimension</div>
+      <div style="text-align: center; color: #64b5f6;">A: Traditional Dashboards</div>
+      <div style="text-align: center; color: #ce93d8;">B: AI NL Query Engine</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="font-weight: bold;">Dev effort (initial)</div>
+      <div style="text-align: center; color: #ef9a9a;">High — 10 dashboards to build</div>
+      <div style="text-align: center; color: #81c784;">Medium — one query UI + schema docs</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="font-weight: bold;">Dev effort (new report)</div>
+      <div style="text-align: center; color: #ef9a9a;">New feature per report</div>
+      <div style="text-align: center; color: #81c784;">Zero — user just asks</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="font-weight: bold;">Query latency</div>
+      <div style="text-align: center; color: #81c784;">Instant (pre-computed)</div>
+      <div style="text-align: center; color: #ffb74d;">2-5 seconds (LLM + SQL)</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="font-weight: bold;">Running cost</div>
+      <div style="text-align: center; color: #81c784;">Zero (just DB compute)</div>
+      <div style="text-align: center; color: #ffb74d;">LLM API cost per query</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="font-weight: bold;">Accuracy</div>
+      <div style="text-align: center; color: #81c784;">100% — hand-written queries</div>
+      <div style="text-align: center; color: #ffb74d;">~90-95% — depends on schema docs quality</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="font-weight: bold;">Flexibility</div>
+      <div style="text-align: center; color: #ef9a9a;">Fixed — only what's built</div>
+      <div style="text-align: center; color: #81c784;">Unlimited — any question</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="font-weight: bold;">Offline support</div>
+      <div style="text-align: center; color: #81c784;">Cacheable</div>
+      <div style="text-align: center; color: #ef9a9a;">Requires internet</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="font-weight: bold;">User experience</div>
+      <div style="text-align: center;">Familiar, structured</div>
+      <div style="text-align: center;">Powerful, but learning curve</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="font-weight: bold;">Multi-tenant aware</div>
+      <div style="text-align: center; color: #81c784;">Via RLS + role scoping</div>
+      <div style="text-align: center; color: #81c784;">RLS + SQL injection + module-aware schema</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="font-weight: bold;">Export (Excel/PDF)</div>
+      <div style="text-align: center; color: #81c784;">Built into each dashboard</div>
+      <div style="text-align: center; color: #81c784;">Export any query result</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Possible Hybrid: A + B Combined</h3>
+  <div style="padding: 16px; background: #1a1a2e; border-radius: 8px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <div style="background: #2a2a3a; padding: 14px; border-radius: 6px; border-left: 3px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold; margin-bottom: 6px;">Core dashboards (Approach A)</div>
+        <div style="font-size: 11px; color: #ccc; line-height: 1.6;">
+          Build 3-5 critical dashboards as traditional views:<br>
+          - Trainer daily view (attendance status)<br>
+          - PM approval queue<br>
+          - School RAG overview<br>
+          - Student attendance summary<br><br>
+          These are high-frequency, must-be-fast, must-work-offline views.
+        </div>
+      </div>
+      <div style="background: #2a2a3a; padding: 14px; border-radius: 6px; border-left: 3px solid #ce93d8;">
+        <div style="color: #ce93d8; font-weight: bold; margin-bottom: 6px;">Everything else (Approach B)</div>
+        <div style="font-size: 11px; color: #ccc; line-height: 1.6;">
+          AI query engine for everything else:<br>
+          - Ad-hoc analysis by PM/Admin<br>
+          - Donor impact reports (custom)<br>
+          - Year-over-year comparisons<br>
+          - Any question not covered by core dashboards<br><br>
+          Users save useful queries as pinned "dashboards" for reuse.
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 12px; padding: 12px; background: #1a3a2a; border-radius: 6px; border: 1px solid #81c784;">
+      <div style="color: #ccc; font-size: 12px;">
+        <strong style="color: #81c784;">Hybrid benefit:</strong> You build fewer traditional dashboards (3-5 instead of 10+), while the AI engine covers the long tail of reporting needs. Users get instant access to critical views AND self-service analytics. Best of both worlds.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RAG Scoring (shared across both approaches) -->
+
+<div class="section" style="margin-top: 24px;">
+  <h3>RAG Scoring Engine (Shared — Both Approaches)</h3>
+  <div style="padding: 16px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+      <div style="background: #1a3a2a; padding: 14px; border-radius: 6px; border: 2px solid #81c784; text-align: center;">
+        <div style="color: #81c784; font-weight: bold; font-size: 16px;">GREEN</div>
+        <div style="color: #ccc; font-size: 10px; margin-top: 6px; line-height: 1.6;">Attendance > 80%<br>Sessions > 90%<br>Teacher-led on target<br>Improvement > 15%</div>
+      </div>
+      <div style="background: #3a3a1a; padding: 14px; border-radius: 6px; border: 2px solid #ffb74d; text-align: center;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 16px;">AMBER</div>
+        <div style="color: #ccc; font-size: 10px; margin-top: 6px; line-height: 1.6;">Attendance 60-80%<br>Sessions 70-90%<br>Within 10% of target<br>Improvement 5-15%</div>
+      </div>
+      <div style="background: #3a1a1a; padding: 14px; border-radius: 6px; border: 2px solid #ef9a9a; text-align: center;">
+        <div style="color: #ef9a9a; font-weight: bold; font-size: 16px;">RED</div>
+        <div style="color: #ccc; font-size: 10px; margin-top: 6px; line-height: 1.6;">Attendance < 60%<br>Sessions < 70%<br>Below target<br>Improvement < 5%</div>
+      </div>
+    </div>
+    <div style="margin-top: 10px; font-size: 11px; color: #888; text-align: center;">
+      Thresholds and KPI weights configurable per tenant via <code>tenant_settings</code> JSONB.
+    </div>
+  </div>
+</div>
+
+<!-- Export Engine (shared) -->
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Export Engine (Shared — Both Approaches)</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #64b5f6;">
+      <div style="color: #64b5f6; font-weight: bold; margin-bottom: 6px;">Excel Export (.xlsx)</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        - Job queue (Redis) for large exports<br>
+        - Generated on backend → S3 → presigned URL<br>
+        - Supports filters, multi-sheet, formatted headers<br>
+        - Works for both dashboard data and NL query results
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #81c784;">
+      <div style="color: #81c784; font-weight: bold; margin-bottom: 6px;">PDF Report</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        - HTML → PDF via Puppeteer/Playwright<br>
+        - Tenant-branded (logo + colors)<br>
+        - Async generation for complex reports<br>
+        - Schedulable (monthly, quarterly auto-generation)
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 12px; background: #1a2a3a; border-radius: 6px; border: 1px solid #81c784;">
+  <p style="color: #ccc; margin: 0; font-size: 13px;"><strong style="color: #81c784;">All design sections complete.</strong> Both reporting approaches documented with trade-offs. RAG scoring and export engine are shared regardless of approach. Ready to compile everything into the full design document for Google Docs — does this look good?</p>
+</div>
+</body></html>

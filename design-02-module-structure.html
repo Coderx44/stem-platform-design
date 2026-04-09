@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e0e0e0; padding: 32px; max-width: 1100px; margin: 0 auto; line-height: 1.5; }
+  h2 { color: #fff; font-size: 24px; margin-bottom: 4px; }
+  h3 { color: #ccc; font-size: 18px; margin-bottom: 12px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 20px; }
+  .section { margin-bottom: 24px; }
+  .options { display: flex; flex-direction: column; gap: 16px; }
+  .option { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; padding: 16px; cursor: pointer; display: flex; gap: 16px; }
+  .option:hover { border-color: #666; }
+  .option .letter { font-size: 24px; font-weight: bold; color: #64b5f6; min-width: 40px; }
+  .option .content { flex: 1; }
+  .option .content h3 { margin-top: 0; }
+  .option .content p { color: #aaa; font-size: 13px; }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .pros, .cons { padding: 8px; border-radius: 4px; }
+  .pros { background: rgba(129,199,132,0.1); }
+  .cons { background: rgba(239,154,154,0.1); }
+  .pros h4 { color: #81c784; font-size: 12px; margin-bottom: 4px; }
+  .cons h4 { color: #ef9a9a; font-size: 12px; margin-bottom: 4px; }
+  .pros ul, .cons ul { padding-left: 16px; font-size: 12px; color: #ccc; }
+  .pros li, .cons li { margin-bottom: 2px; }
+  a { color: #64b5f6; }
+  code { background: #2a2a3a; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; overflow: hidden; cursor: pointer; }
+  .card:hover { border-color: #666; }
+  .card-body { padding: 12px; }
+  .mock-nav { background: #2a2a3a; padding: 8px 16px; border-radius: 4px; margin-bottom: 8px; color: #888; }
+  .mock-sidebar { background: #1a1a2e; padding: 16px; min-width: 150px; border-radius: 4px; color: #666; }
+  .mock-content { background: #1a1a2e; padding: 16px; flex: 1; border-radius: 4px; color: #666; }
+  .mock-button { background: #64b5f6; color: #000; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+  .mock-input { background: #2a2a3a; border: 1px solid #444; padding: 8px; border-radius: 4px; color: #ccc; }
+  .placeholder { background: #2a2a3a; padding: 32px; border-radius: 4px; color: #666; text-align: center; }
+  .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+  .mockup { border: 1px solid #333; border-radius: 8px; overflow: hidden; }
+  .mockup-header { background: #2a2a3a; padding: 8px 16px; font-size: 12px; color: #888; }
+  .mockup-body { padding: 16px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .back-link { display: inline-block; margin-bottom: 20px; color: #64b5f6; text-decoration: none; font-size: 14px; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back-link">← Back to Index</a>
+<h2>Section 2: Module Structure & Licensing</h2>
+<p class="subtitle">How modules are organized, registered, and gated per tenant license</p>
+
+<div class="section">
+  <h3>Module Registry Architecture</h3>
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-family: monospace; font-size: 12px; line-height: 1.6; color: #e0e0e0;">
+
+    <div style="text-align: center; margin-bottom: 16px; color: #ffb74d; font-weight: bold; font-size: 14px;">Request Flow Through Module Gating</div>
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+      <div style="background: #2a3a4a; padding: 8px 14px; border-radius: 20px; font-size: 11px; color: #64b5f6;">Client Request</div>
+      <span style="color: #888;">→</span>
+      <div style="background: #2a3a4a; padding: 8px 14px; border-radius: 20px; font-size: 11px; color: #ffb74d;">JWT Validation</div>
+      <span style="color: #888;">→</span>
+      <div style="background: #2a3a4a; padding: 8px 14px; border-radius: 20px; font-size: 11px; color: #ce93d8;">Tenant Resolution</div>
+      <span style="color: #888;">→</span>
+      <div style="background: #3a2a2a; padding: 8px 14px; border-radius: 20px; font-size: 11px; color: #ef9a9a; border: 1px solid #ef9a9a;">Module License Check</div>
+      <span style="color: #888;">→</span>
+      <div style="background: #2a3a4a; padding: 8px 14px; border-radius: 20px; font-size: 11px; color: #81c784;">Role Permission Check</div>
+      <span style="color: #888;">→</span>
+      <div style="background: #1a3a2a; padding: 8px 14px; border-radius: 20px; font-size: 11px; color: #81c784; border: 1px solid #81c784;">Module Handler</div>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 16px; color: #888;">── Module License Check Detail ──</div>
+    <div style="background: #2a2a3a; padding: 16px; border-radius: 6px; margin: 0 20px;">
+      <div style="color: #ccc; font-size: 11px; line-height: 2;">
+        <div><span style="color: #ef9a9a;">1.</span> Extract <span style="color: #ffb74d;">tenant_id</span> from JWT claims</div>
+        <div><span style="color: #ef9a9a;">2.</span> Lookup <span style="color: #ffb74d;">tenant_modules</span> table (cached in Redis, TTL 5min)</div>
+        <div><span style="color: #ef9a9a;">3.</span> Match requested route → <span style="color: #ffb74d;">module_key</span></div>
+        <div><span style="color: #ef9a9a;">4.</span> If module not licensed → <span style="color: #ef9a9a;">403 Module Not Available</span></div>
+        <div><span style="color: #ef9a9a;">5.</span> If module licensed → check <span style="color: #81c784;">user role</span> against module permissions → proceed</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Module Inventory</h3>
+  <p class="subtitle">Each module is a self-contained package with its own routes, services, DB tables, and event handlers</p>
+
+  <div style="display: grid; grid-template-columns: 1fr; gap: 2px; background: #1a1a2e; border-radius: 8px; overflow: hidden;">
+
+    <div style="display: grid; grid-template-columns: 50px 160px 1fr 120px 100px; gap: 0; background: #2a2a4a; padding: 10px 12px; font-size: 11px; font-weight: bold; color: #aaa;">
+      <div>#</div>
+      <div>Module</div>
+      <div>Key Features</div>
+      <div>Dependencies</div>
+      <div>Phase</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 50px 160px 1fr 120px 100px; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="color: #64b5f6;">M1</div>
+      <div style="color: #64b5f6; font-weight: bold;">School Management</div>
+      <div>CRUD, calendar, kits/assets, growth rubrics, STEM club, volunteer tracking</div>
+      <div style="color: #888;">Core</div>
+      <div><span style="background: #1a3a2a; color: #81c784; padding: 2px 8px; border-radius: 10px; font-size: 10px;">Phase 1</span></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 50px 160px 1fr 120px 100px; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="color: #81c784;">M2</div>
+      <div style="color: #81c784; font-weight: bold;">Student Management</div>
+      <div>Profile (unique ID), bulk import, longitudinal tracking, grade promotion, section transfer</div>
+      <div style="color: #888;">M1 (School)</div>
+      <div><span style="background: #1a3a2a; color: #81c784; padding: 2px 8px; border-radius: 10px; font-size: 10px;">Phase 1</span></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 50px 160px 1fr 120px 100px; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="color: #ffb74d;">M3</div>
+      <div style="color: #ffb74d; font-weight: bold;">Trainer Management</div>
+      <div>Profile, auto-login creation, leave management, competency matrix, L&D tracking</div>
+      <div style="color: #888;">Core</div>
+      <div><span style="background: #1a3a2a; color: #81c784; padding: 2px 8px; border-radius: 10px; font-size: 10px;">Phase 1</span></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 50px 160px 1fr 120px 100px; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="color: #ef9a9a;">M4</div>
+      <div style="color: #ef9a9a; font-weight: bold;">Teacher Management</div>
+      <div>Profile, competency rubric, teacher-led session tracking, rubric approval</div>
+      <div style="color: #888;">M1 (School)</div>
+      <div><span style="background: #1a3a2a; color: #81c784; padding: 2px 8px; border-radius: 10px; font-size: 10px;">Phase 1</span></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 50px 160px 1fr 120px 100px; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="color: #ce93d8;">M5</div>
+      <div style="color: #ce93d8; font-weight: bold;">Session Planning</div>
+      <div>Create/edit/clone plans, assign trainers & students, link to lesson plans, cancel/reschedule</div>
+      <div style="color: #888;">M1, M2, M3</div>
+      <div><span style="background: #1a3a2a; color: #81c784; padding: 2px 8px; border-radius: 10px; font-size: 10px;">Phase 1</span></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 50px 160px 1fr 120px 100px; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="color: #fff176;">M6</div>
+      <div style="color: #fff176; font-weight: bold;">Attendance</div>
+      <div>Session attendance, non-session attendance, geo-tagging, overlap validation, auto-save</div>
+      <div style="color: #888;">M3, M5</div>
+      <div><span style="background: #1a3a2a; color: #81c784; padding: 2px 8px; border-radius: 10px; font-size: 10px;">Phase 1</span></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 50px 160px 1fr 120px 100px; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="color: #f48fb1;">M7</div>
+      <div style="color: #f48fb1; font-weight: bold;">Assessment</div>
+      <div>OMR scanning, baseline/endline capture, subject/skill mapping, auto-scoring, improvement reports</div>
+      <div style="color: #888;">M2 (Student)</div>
+      <div><span style="background: #3a3a1a; color: #fff176; padding: 2px 8px; border-radius: 10px; font-size: 10px;">Phase 2</span></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 50px 160px 1fr 120px 100px; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="color: #4db6ac;">M8</div>
+      <div style="color: #4db6ac; font-weight: bold;">Donor Management</div>
+      <div>Donor details, view-only dashboards, school-level impact, automated reports</div>
+      <div style="color: #888;">M1 (School)</div>
+      <div><span style="background: #3a3a1a; color: #fff176; padding: 2px 8px; border-radius: 10px; font-size: 10px;">Phase 2</span></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 50px 160px 1fr 120px 100px; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div style="color: #90caf9;">M9</div>
+      <div style="color: #90caf9; font-weight: bold;">Reporting & Analytics</div>
+      <div>Dashboards, RAG scoring, trainer utilization, leave summary, cohort comparison, Excel/PDF export</div>
+      <div style="color: #888;">All modules</div>
+      <div><span style="background: #1a3a2a; color: #81c784; padding: 2px 8px; border-radius: 10px; font-size: 10px;">Phase 1</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Module Internal Structure</h3>
+  <p class="subtitle">Every module follows the same package layout</p>
+  <div style="background: #1a1a2e; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 12px; color: #ccc; line-height: 1.8;">
+    <div style="color: #ffb74d; margin-bottom: 8px;">modules/</div>
+    <div>&nbsp;&nbsp;<span style="color: #64b5f6;">school/</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color: #81c784;">routes.ts</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #666;"># API route definitions</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color: #81c784;">controller.ts</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #666;"># Request/response handling (thin)</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color: #81c784;">service.ts</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #666;"># Business logic + transactions</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color: #81c784;">repository.ts</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #666;"># Database queries (Supabase client)</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color: #81c784;">types.ts</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #666;"># DTOs, interfaces, enums</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color: #81c784;">events.ts</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #666;"># Event producers/consumers</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color: #81c784;">validators.ts</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #666;"># Input validation (Zod schemas)</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color: #81c784;">module.ts</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #666;"># Module registration (key, deps, routes)</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;└── <span style="color: #81c784;">__tests__/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #666;"># Unit + integration tests</span></div>
+    <div style="margin-top: 12px;">&nbsp;&nbsp;<span style="color: #64b5f6;">student/</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;└── <span style="color: #666;">... same structure ...</span></div>
+    <div style="margin-top: 12px;">&nbsp;&nbsp;<span style="color: #64b5f6;">trainer/</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;└── <span style="color: #666;">... same structure ...</span></div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Licensing Data Model</h3>
+  <div style="background: #1a1a2e; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 12px; color: #ccc; line-height: 1.8;">
+    <div style="color: #ffb74d; margin-bottom: 4px;">── tenants ──</div>
+    <div>&nbsp;&nbsp;id, name, slug, plan_tier, status, created_at</div>
+    <div style="color: #ffb74d; margin-top: 12px; margin-bottom: 4px;">── modules ──</div>
+    <div>&nbsp;&nbsp;id, key (e.g. "school", "attendance"), name, description, version</div>
+    <div style="color: #ffb74d; margin-top: 12px; margin-bottom: 4px;">── tenant_modules ──</div>
+    <div>&nbsp;&nbsp;tenant_id, module_id, enabled, licensed_until, max_users, config_overrides (JSONB)</div>
+    <div style="color: #ffb74d; margin-top: 12px; margin-bottom: 4px;">── plan_templates ──</div>
+    <div>&nbsp;&nbsp;id, name (e.g. "Basic", "Pro", "Enterprise"), included_modules[], max_users, price</div>
+  </div>
+  <div style="margin-top: 12px; padding: 12px; background: #2a2a3a; border-radius: 6px;">
+    <div style="color: #ccc; font-size: 12px;">
+      <strong style="color: #ffb74d;">How licensing works:</strong> When a new tenant signs up, a plan template pre-populates their <code>tenant_modules</code> entries. Admins can override individual modules (enable/disable, extend license, adjust user limits). The <code>config_overrides</code> JSONB field allows per-tenant customization (e.g., custom activity types for non-session attendance).
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 12px; background: #1a2a3a; border-radius: 6px; border: 1px solid #64b5f6;">
+  <p style="color: #ccc; margin: 0; font-size: 13px;"><strong style="color: #64b5f6;">Review:</strong> Does this module structure, phasing, and licensing model look right? I'll move to the database design and multi-tenancy section next.</p>
+</div>
+</body></html>

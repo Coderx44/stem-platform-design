@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e0e0e0; padding: 32px; max-width: 1100px; margin: 0 auto; line-height: 1.5; }
+  h2 { color: #fff; font-size: 24px; margin-bottom: 4px; }
+  h3 { color: #ccc; font-size: 18px; margin-bottom: 12px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 20px; }
+  .section { margin-bottom: 24px; }
+  .options { display: flex; flex-direction: column; gap: 16px; }
+  .option { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; padding: 16px; cursor: pointer; display: flex; gap: 16px; }
+  .option:hover { border-color: #666; }
+  .option .letter { font-size: 24px; font-weight: bold; color: #64b5f6; min-width: 40px; }
+  .option .content { flex: 1; }
+  .option .content h3 { margin-top: 0; }
+  .option .content p { color: #aaa; font-size: 13px; }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .pros, .cons { padding: 8px; border-radius: 4px; }
+  .pros { background: rgba(129,199,132,0.1); }
+  .cons { background: rgba(239,154,154,0.1); }
+  .pros h4 { color: #81c784; font-size: 12px; margin-bottom: 4px; }
+  .cons h4 { color: #ef9a9a; font-size: 12px; margin-bottom: 4px; }
+  .pros ul, .cons ul { padding-left: 16px; font-size: 12px; color: #ccc; }
+  .pros li, .cons li { margin-bottom: 2px; }
+  a { color: #64b5f6; }
+  code { background: #2a2a3a; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { background: #1a1a2e; border: 1px solid #333; border-radius: 8px; overflow: hidden; cursor: pointer; }
+  .card:hover { border-color: #666; }
+  .card-body { padding: 12px; }
+  .mock-nav { background: #2a2a3a; padding: 8px 16px; border-radius: 4px; margin-bottom: 8px; color: #888; }
+  .mock-sidebar { background: #1a1a2e; padding: 16px; min-width: 150px; border-radius: 4px; color: #666; }
+  .mock-content { background: #1a1a2e; padding: 16px; flex: 1; border-radius: 4px; color: #666; }
+  .mock-button { background: #64b5f6; color: #000; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+  .mock-input { background: #2a2a3a; border: 1px solid #444; padding: 8px; border-radius: 4px; color: #ccc; }
+  .placeholder { background: #2a2a3a; padding: 32px; border-radius: 4px; color: #666; text-align: center; }
+  .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+  .mockup { border: 1px solid #333; border-radius: 8px; overflow: hidden; }
+  .mockup-header { background: #2a2a3a; padding: 8px 16px; font-size: 12px; color: #888; }
+  .mockup-body { padding: 16px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .back-link { display: inline-block; margin-bottom: 20px; color: #64b5f6; text-decoration: none; font-size: 14px; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back-link">← Back to Index</a>
+<h2>Section 4: Workflow Engine & Approval System</h2>
+<p class="subtitle">Generic, configurable approval workflows with role-based chains</p>
+
+<div class="section">
+  <h3>Workflow State Machine</h3>
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+      <div style="background: #2a2a3a; padding: 10px 18px; border-radius: 6px; text-align: center; border: 2px solid #888;">
+        <div style="color: #888; font-weight: bold;">DRAFT</div>
+        <div style="font-size: 10px; color: #666; margin-top: 2px;">Editable by submitter</div>
+      </div>
+      <div style="color: #888;">→<div style="font-size: 9px; color: #64b5f6;">submit()</div></div>
+      <div style="background: #2a2a3a; padding: 10px 18px; border-radius: 6px; text-align: center; border: 2px solid #ffb74d;">
+        <div style="color: #ffb74d; font-weight: bold;">PENDING</div>
+        <div style="font-size: 10px; color: #666; margin-top: 2px;">Awaiting approval</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; color: #888;">
+        <div>→<span style="font-size: 9px; color: #81c784;"> approve()</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="background: #1a3a2a; padding: 10px 18px; border-radius: 6px; text-align: center; border: 2px solid #81c784;">
+          <div style="color: #81c784; font-weight: bold;">APPROVED</div>
+          <div style="font-size: 10px; color: #666; margin-top: 2px;">Locked, data finalized</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+      <div style="width: 140px;"></div>
+      <div style="width: 40px;"></div>
+      <div style="background: #2a2a3a; padding: 10px 18px; border-radius: 6px; text-align: center; border: 2px solid #ffb74d; opacity: 0.4;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">PENDING</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; color: #888;">
+        <div>→<span style="font-size: 9px; color: #ef9a9a;"> reject()</span></div>
+      </div>
+      <div style="background: #3a1a1a; padding: 10px 18px; border-radius: 6px; text-align: center; border: 2px solid #ef9a9a;">
+        <div style="color: #ef9a9a; font-weight: bold;">REJECTED</div>
+        <div style="font-size: 10px; color: #666; margin-top: 2px;">With comments</div>
+      </div>
+      <div style="color: #888;">→<div style="font-size: 9px; color: #64b5f6;">resubmit()</div></div>
+      <div style="background: #2a2a3a; padding: 10px 18px; border-radius: 6px; text-align: center; border: 2px dashed #ffb74d;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">PENDING</div>
+        <div style="font-size: 10px; color: #666; margin-top: 2px;">(Re-enters queue)</div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+      <div style="width: 140px;"></div>
+      <div style="width: 40px;"></div>
+      <div style="background: #2a2a3a; padding: 10px 18px; border-radius: 6px; text-align: center; border: 2px solid #ffb74d; opacity: 0.4;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">PENDING</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; color: #888;">
+        <div>→<span style="font-size: 9px; color: #ce93d8;"> clarify()</span></div>
+      </div>
+      <div style="background: #2a2a3a; padding: 10px 18px; border-radius: 6px; text-align: center; border: 2px solid #ce93d8;">
+        <div style="color: #ce93d8; font-weight: bold;">CLARIFICATION</div>
+        <div style="font-size: 10px; color: #666; margin-top: 2px;">Sent back to submitter</div>
+      </div>
+      <div style="color: #888;">→<div style="font-size: 9px; color: #64b5f6;">respond()</div></div>
+      <div style="background: #2a2a3a; padding: 10px 18px; border-radius: 6px; text-align: center; border: 2px dashed #ffb74d;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">PENDING</div>
+        <div style="font-size: 10px; color: #666; margin-top: 2px;">(Re-enters queue)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Multi-Step Approval Chains</h3>
+  <p class="subtitle">Workflows support 1 or more approval steps with different roles at each step</p>
+
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+    <div style="text-align: center; margin-bottom: 16px; color: #ffb74d; font-weight: bold;">Example: Trainer Competency Matrix (2-step approval)</div>
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;">
+      <div style="background: #2a3a4a; padding: 10px 14px; border-radius: 6px; text-align: center; font-size: 11px;">
+        <div style="color: #64b5f6; font-weight: bold;">Trainer</div>
+        <div style="color: #666; font-size: 10px;">Self-scores</div>
+      </div>
+      <span style="color: #888;">→</span>
+      <div style="background: #2a3a4a; padding: 10px 14px; border-radius: 6px; text-align: center; font-size: 11px; border: 1px solid #ffb74d;">
+        <div style="color: #ffb74d; font-weight: bold;">Step 1</div>
+        <div style="color: #666; font-size: 10px;">Project Manager</div>
+        <div style="color: #666; font-size: 10px;">Reviews + scores</div>
+      </div>
+      <span style="color: #888;">→</span>
+      <div style="background: #2a3a4a; padding: 10px 14px; border-radius: 6px; text-align: center; font-size: 11px; border: 1px solid #ce93d8;">
+        <div style="color: #ce93d8; font-weight: bold;">Step 2</div>
+        <div style="color: #666; font-size: 10px;">Admin</div>
+        <div style="color: #666; font-size: 10px;">Final approval</div>
+      </div>
+      <span style="color: #888;">→</span>
+      <div style="background: #1a3a2a; padding: 10px 14px; border-radius: 6px; text-align: center; font-size: 11px; border: 1px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold;">APPROVED</div>
+        <div style="color: #666; font-size: 10px;">Locked</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin: 20px 0 16px; color: #ffb74d; font-weight: bold;">Example: Non-Session Attendance (1-step approval)</div>
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;">
+      <div style="background: #2a3a4a; padding: 10px 14px; border-radius: 6px; text-align: center; font-size: 11px;">
+        <div style="color: #64b5f6; font-weight: bold;">Trainer</div>
+        <div style="color: #666; font-size: 10px;">Logs activity</div>
+      </div>
+      <span style="color: #888;">→</span>
+      <div style="background: #2a3a4a; padding: 10px 14px; border-radius: 6px; text-align: center; font-size: 11px; border: 1px solid #ffb74d;">
+        <div style="color: #ffb74d; font-weight: bold;">Step 1</div>
+        <div style="color: #666; font-size: 10px;">Project Manager</div>
+        <div style="color: #666; font-size: 10px;">Approve / Reject</div>
+      </div>
+      <span style="color: #888;">→</span>
+      <div style="background: #1a3a2a; padding: 10px 14px; border-radius: 6px; text-align: center; font-size: 11px; border: 1px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold;">APPROVED</div>
+        <div style="color: #666; font-size: 10px;">Locked</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Workflow Definition Schema</h3>
+  <div style="background: #1a1a2e; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 11px; color: #ccc; line-height: 1.8;">
+    <div style="color: #ce93d8;">// Stored in workflow_definitions table, configurable per tenant</div>
+    <div>{</div>
+    <div>&nbsp;&nbsp;<span style="color: #64b5f6;">"entity_type"</span>: <span style="color: #81c784;">"trainer_competency"</span>,</div>
+    <div>&nbsp;&nbsp;<span style="color: #64b5f6;">"submit_roles"</span>: [<span style="color: #81c784;">"trainer"</span>],</div>
+    <div>&nbsp;&nbsp;<span style="color: #64b5f6;">"steps"</span>: [</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"order"</span>: <span style="color: #ffb74d;">1</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"approver_role"</span>: <span style="color: #81c784;">"project_manager"</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"can_clarify"</span>: <span style="color: #ffb74d;">true</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"auto_escalate_hours"</span>: <span style="color: #ffb74d;">48</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"escalate_to"</span>: <span style="color: #81c784;">"admin"</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;},</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"order"</span>: <span style="color: #ffb74d;">2</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"approver_role"</span>: <span style="color: #81c784;">"admin"</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"can_clarify"</span>: <span style="color: #ffb74d;">false</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"auto_escalate_hours"</span>: <span style="color: #ffb74d;">null</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+    <div>&nbsp;&nbsp;],</div>
+    <div>&nbsp;&nbsp;<span style="color: #64b5f6;">"on_approve"</span>: <span style="color: #81c784;">"lock_entity"</span>,</div>
+    <div>&nbsp;&nbsp;<span style="color: #64b5f6;">"on_reject"</span>: <span style="color: #81c784;">"notify_submitter"</span>,</div>
+    <div>&nbsp;&nbsp;<span style="color: #64b5f6;">"notifications"</span>: {</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"on_submit"</span>: [<span style="color: #81c784;">"in_app"</span>, <span style="color: #81c784;">"whatsapp"</span>],</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"on_approve"</span>: [<span style="color: #81c784;">"in_app"</span>],</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"on_reject"</span>: [<span style="color: #81c784;">"in_app"</span>, <span style="color: #81c784;">"whatsapp"</span>],</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #64b5f6;">"reminder_hours"</span>: <span style="color: #ffb74d;">24</span></div>
+    <div>&nbsp;&nbsp;}</div>
+    <div>}</div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>All Workflow Types</h3>
+  <div style="display: grid; grid-template-columns: 1fr; gap: 2px; background: #1a1a2e; border-radius: 8px; overflow: hidden;">
+    <div style="display: grid; grid-template-columns: 200px 120px 200px 120px 1fr; gap: 0; background: #2a2a4a; padding: 10px 12px; font-size: 11px; font-weight: bold; color: #aaa;">
+      <div>Workflow</div>
+      <div>Submitter</div>
+      <div>Approval Chain</div>
+      <div>Escalation</div>
+      <div>On Approve</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 120px 200px 120px 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Non-session attendance</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div>Project Manager</div>
+      <div style="color: #888;">48hrs → Admin</div>
+      <div style="color: #81c784;">Lock entry</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 120px 200px 120px 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Session plan</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div>Project Manager</div>
+      <div style="color: #888;">48hrs → Admin</div>
+      <div style="color: #81c784;">Activate session</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 120px 200px 120px 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Teacher rubric</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div>Project Manager (bulk)</div>
+      <div style="color: #888;">48hrs → Admin</div>
+      <div style="color: #81c784;">Lock rubric</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 120px 200px 120px 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>School growth rubric</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div>Project Manager</div>
+      <div style="color: #888;">48hrs → Admin</div>
+      <div style="color: #81c784;">Lock rubric</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 120px 200px 120px 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Leave request</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div>Project Manager</div>
+      <div style="color: #888;">24hrs → Admin</div>
+      <div style="color: #81c784;">Update calendar</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 120px 200px 120px 1fr; gap: 0; background: #2a2a3a; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Trainer competency</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div>PM → Admin</div>
+      <div style="color: #888;">48hrs each</div>
+      <div style="color: #81c784;">Lock matrix</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 200px 120px 200px 120px 1fr; gap: 0; background: #1a1a2e; padding: 10px 12px; font-size: 11px; color: #ccc;">
+      <div>Edit locked entry</div>
+      <div style="color: #64b5f6;">Trainer</div>
+      <div>Project Manager</div>
+      <div style="color: #888;">—</div>
+      <div style="color: #81c784;">Unlock + re-lock</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Workflow Engine Internals</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #64b5f6;">
+      <div style="color: #64b5f6; font-weight: bold; margin-bottom: 6px;">Event-Driven Side Effects</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        When a workflow transitions state, the engine emits events:<br>
+        <code style="color: #ffb74d;">workflow.submitted</code> → Notification Hub sends alerts to approvers<br>
+        <code style="color: #ffb74d;">workflow.approved</code> → Module-specific handler locks entity<br>
+        <code style="color: #ffb74d;">workflow.rejected</code> → Notifies submitter with comments<br>
+        <code style="color: #ffb74d;">workflow.escalated</code> → Re-assigns to next-level role
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #81c784;">
+      <div style="color: #81c784; font-weight: bold; margin-bottom: 6px;">Bulk Operations</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        Teacher rubrics require bulk approve/reject. The engine supports:<br>
+        <code style="color: #ffb74d;">bulkApprove(entity_ids[])</code> — Approve multiple in one transaction<br>
+        <code style="color: #ffb74d;">bulkReject(entity_ids[], comment)</code> — Reject with shared comment<br>
+        All within a single DB transaction for consistency.
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #ffb74d;">
+      <div style="color: #ffb74d; font-weight: bold; margin-bottom: 6px;">Escalation Cron</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        A scheduled job runs every hour:<br>
+        1. Find workflows in PENDING state > <code>auto_escalate_hours</code><br>
+        2. Re-assign to <code>escalate_to</code> role<br>
+        3. Send escalation notification<br>
+        4. Log in audit trail
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #ce93d8;">
+      <div style="color: #ce93d8; font-weight: bold; margin-bottom: 6px;">Audit Trail</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        Every state transition is recorded in <code>audit_trail</code> JSONB array:<br>
+        <code style="color: #888;">{ action, by, role, at, comment, from_state, to_state }</code><br>
+        Immutable append-only. Queryable for compliance reports.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 12px; background: #1a2a3a; border-radius: 6px; border: 1px solid #64b5f6;">
+  <p style="color: #ccc; margin: 0; font-size: 13px;"><strong style="color: #64b5f6;">Review:</strong> Does this workflow engine design cover all your approval needs? Next up: Offline Sync Strategy and OMR Processing Pipeline.</p>
+</div>
+</body></html>
