@@ -171,7 +171,7 @@ BUSINESS LOGIC (Modular Monolith):
 DATA LAYER:
    Supabase Auth (JWT)  |  Supabase PostgreSQL + RLS  |  AWS S3  |  Redis/in-memory (cache + queues)
                      |
-EXTERNAL: Twilio (WhatsApp)  |  FCM (Push)  |  CloudFront CDN
+EXTERNAL: Twilio (WhatsApp)  |  FCM (Push)
 ```
 
 ### Design Principles
