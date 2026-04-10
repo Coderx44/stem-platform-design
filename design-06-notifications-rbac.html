@@ -231,7 +231,8 @@
           <div style="background: #2a2a3a; padding: 10px 30px; border-radius: 6px; text-align: center; border: 2px solid #ffb74d; width: 260px;">
             <div style="color: #ffb74d; font-weight: bold; font-size: 13px;">Project Manager</div>
             <div style="color: #888; font-size: 10px; margin-top: 2px;">Cluster Lead, Cluster Manager</div>
-            <div style="color: #888; font-size: 10px;">All Trainer perms + approvals, monitoring.</div>
+            <div style="color: #888; font-size: 10px;">All Admin perms by default (except module config).</div>
+            <div style="color: #888; font-size: 10px;">Scoped to their cluster. Tenant can restrict.</div>
           </div>
           <div style="color: #888;">▲</div>
           <div style="background: #1a3a2a; padding: 10px 30px; border-radius: 6px; text-align: center; border: 2px solid #81c784; width: 260px;">
@@ -260,7 +261,7 @@
 <div class="section" style="margin-top: 24px;">
   <h3>Permission Matrix</h3>
   <div style="margin-bottom: 8px; padding: 8px 12px; background: #2a2a3a; border-radius: 4px; font-size: 11px; color: #888;">
-    <strong style="color: #ffb74d;">Note:</strong> PM inherits all Trainer permissions. Donor is view-only across the board. All permissions are configurable per tenant via overrides.
+    <strong style="color: #ffb74d;">Note:</strong> PM has all Admin permissions by default (except module/license config). Donor is view-only. All permissions configurable per tenant via overrides — tenants can restrict PM permissions if needed.
   </div>
   <div style="display: grid; grid-template-columns: 1fr; gap: 2px; background: #1a1a2e; border-radius: 8px; overflow: hidden; font-size: 10px;">
     <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #2a2a4a; padding: 8px 12px; font-weight: bold; color: #aaa; font-size: 11px;">
@@ -314,7 +315,7 @@
     <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
       <div>View dashboards/reports</div>
       <div style="text-align: center; color: #81c784;">own</div>
-      <div style="text-align: center; color: #81c784;">cluster</div>
+      <div style="text-align: center; color: #81c784;">all</div>
       <div style="text-align: center; color: #81c784;">funded schools</div>
       <div style="text-align: center; color: #81c784;">all</div>
     </div>
@@ -338,12 +339,20 @@
     <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
       <div>Set targets & config</div>
       <div style="text-align: center; color: #888;">—</div>
-      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
       <div style="text-align: center; color: #888;">—</div>
       <div style="text-align: center; color: #81c784;">&#10003;</div>
     </div>
 
     <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Create/edit courses (LMS)</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">—</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px repeat(4, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
       <div>Module & license config</div>
       <div style="text-align: center; color: #888;">—</div>
       <div style="text-align: center; color: #888;">—</div>

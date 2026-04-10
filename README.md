@@ -15,12 +15,13 @@
 7. [Workflow Engine](#7-workflow-engine)
 8. [Offline Sync](#8-offline-sync)
 9. [OMR Processing Pipeline](#9-omr-processing-pipeline)
-10. [Notifications](#10-notifications)
-11. [Role-Based Access Control](#11-role-based-access-control)
-12. [Reporting & Analytics](#12-reporting--analytics)
-13. [Phasing](#13-phasing)
-14. [Risk Register](#14-risk-register)
-15. [Open Decisions](#15-open-decisions)
+10. [AI Curriculum Module (LMS)](#10-ai-curriculum-module-lms)
+11. [Notifications](#11-notifications)
+12. [Role-Based Access Control](#12-role-based-access-control)
+13. [Reporting & Analytics](#13-reporting--analytics)
+14. [Phasing](#14-phasing)
+15. [Risk Register](#15-risk-register)
+16. [Open Decisions](#16-open-decisions)
 
 ---
 
@@ -77,6 +78,7 @@ Multi-tenant, module-based STEM education management platform for NGOs. Manages 
 | M7 | Assessment | OMR scanning, baseline/endline, subject/skill mapping, auto-scoring | 2 |
 | M8 | Donor Management | Donor details, view-only dashboards, school-level impact | 2 |
 | M9 | Reporting | Dashboards, RAG scoring, utilization, Excel/PDF export | 1 |
+| M10 | AI Curriculum (LMS) | SCORM/xAPI content, built-in quiz builder, course progress tracking, certificates | 2 |
 
 ### Module Dependencies
 
@@ -90,6 +92,7 @@ Core Platform (Auth, Tenancy, Licensing)
     ├── M5: Session (depends on M1, M2, M3)
     │     └── M6: Attendance (depends on M3, M5)
     ├── M7: Assessment (depends on M2)
+    ├── M10: AI Curriculum (depends on M4)
     └── M9: Reporting (reads from all)
 
 Shared: Workflow Engine, Notification Hub, OMR Pipeline
@@ -360,7 +363,133 @@ Conflicts are rare because trainers only edit their own data over short offline 
 
 ---
 
-## 10. Notifications
+## 10. AI Curriculum Module (LMS)
+
+LMS for teacher training. Teachers learn STEM curriculum on the platform, pass assessments, then teach it to students offline. Students don't use this module directly.
+
+Two approaches for content creation are under consideration. Both share the same course structure, progress tracking, and data model.
+
+### Content Model (shared)
+
+```
+Course
+  └── Module (sequential or flexible ordering)
+        └── Lesson
+              └── Content (varies by approach)
+              └── Quiz (built-in, auto-graded)
+```
+
+### Approach A: SCORM-Based Content
+
+Admins create content in external authoring tools (H5P, Lumi, Articulate, Captivate) and upload SCORM packages to the platform. Platform plays and tracks them.
+
+**How it works:**
+1. Admin uploads SCORM .zip → extracted to S3
+2. Teacher opens lesson → SCORM player (iframe) loads content via presigned URL
+3. SCORM content reports progress back via JavaScript API (completion, score, time, bookmark)
+4. Platform stores tracking data in `lesson_progress.scorm_data` JSONB
+5. Resume support — teacher picks up where they left off
+
+**SCORM player:** Use `scorm-again` (open-source JS library) as the API adapter. Supports SCORM 1.2 and 2004.
+
+**Pros:** Rich interactive content (branching scenarios, simulations, embedded quizzes within content), industry standard, content portable across LMS platforms.
+**Cons:** Requires external authoring tools (learning curve for NGO admins), content creation is a separate step outside the platform.
+
+### Approach B: Built-in Content Builder
+
+Admins build courses directly in the platform — no external tools needed. Content types: text/rich-text lessons, YouTube/uploaded video embeds, document uploads (PDF, slides), and built-in quizzes.
+
+**How it works:**
+1. Admin uses in-platform editor to create lessons
+2. Rich text editor for text content (markdown or WYSIWYG)
+3. Embed YouTube videos or upload videos to S3
+4. Upload PDFs/slides as downloadable/viewable resources
+5. Build quizzes inline with the lesson flow
+
+**Pros:** Self-contained (no external tools), lower barrier for NGO admins, simpler to build and maintain.
+**Cons:** Less interactive than SCORM (no branching, simulations), more dev effort to build the editor, content not portable to other LMS platforms.
+
+### Comparison
+
+| Dimension | A: SCORM | B: Built-in Builder |
+|---|---|---|
+| Content richness | High — full interactivity | Medium — text, video, quiz |
+| Admin skill needed | Medium — needs authoring tool | Low — in-platform editor |
+| External tools required | Yes (H5P/Lumi are free) | No |
+| Dev effort | Medium — SCORM player + API | Medium — content editor + renderer |
+| Content portability | Yes — SCORM is standard | No — locked to platform |
+| Offline content creation | Yes (Lumi works offline) | No |
+
+Both approaches can coexist — the `lessons` table supports multiple content types. A tenant could use SCORM for complex interactive modules and the built-in builder for simple text/video lessons.
+
+### Built-in Quiz Builder (shared — both approaches)
+
+Question types: multiple choice (single/multi select), true/false, short answer. All auto-graded. Configurable pass/fail threshold and max attempts per quiz.
+
+### Core Features
+
+**Course Management (Admin/PM):**
+- Create courses with modules and lessons
+- Upload SCORM packages OR build content in-platform
+- Upload videos and documents as lesson content
+- Build quizzes with MCQ, true/false, short answer
+- Set pass/fail threshold per quiz (e.g., 70%)
+- Mark modules as sequential or flexible ordering
+- Assign courses to specific teachers or groups
+
+**Learning Experience (Teacher):**
+- Browse available courses and self-enroll
+- View assigned courses
+- Progress through lessons sequentially or flexibly
+- Watch videos, read documents, complete SCORM/built-in content
+- Take quizzes — immediate auto-graded results
+- Retry failed quizzes (configurable max attempts)
+- View own progress and scores
+- Receive certificate on course completion
+
+**Progress Tracking (Admin/PM):**
+- Dashboard showing teacher progress per course
+- Completion %, quiz scores, time spent per lesson
+- Number of attempts per quiz
+- Filter by school, cluster, course
+- Export progress reports (Excel)
+
+### Data Model
+
+**courses:** id, tenant_id, title, description, thumbnail_url, created_by, status (draft/published/archived)
+
+**course_modules:** id, course_id, tenant_id, title, order, is_sequential
+
+**lessons:** id, module_id, tenant_id, title, content_type (scorm/video/document/richtext/quiz), content_url (S3 key, nullable), content_body (TEXT, for richtext), scorm_config (JSONB, nullable), order
+
+**quizzes:** id, lesson_id, tenant_id, title, pass_threshold, max_attempts, questions (JSONB array of {type, question, options[], correct_answer})
+
+**enrollments:** id, tenant_id, teacher_id, course_id, enrolled_at, enrolled_by (self/admin/pm), status (in_progress/completed/dropped)
+
+**lesson_progress:** id, tenant_id, teacher_id, lesson_id, status (not_started/in_progress/completed), time_spent_seconds, completed_at, scorm_data (JSONB, nullable — for SCORM tracking)
+
+**quiz_attempts:** id, tenant_id, teacher_id, quiz_id, attempt_number, answers (JSONB), score, passed, started_at, completed_at
+
+**certificates:** id, tenant_id, teacher_id, course_id, issued_at, certificate_url (S3 key)
+
+### Who Can Do What
+
+| Action | Teacher | PM | Admin |
+|---|---|---|---|
+| Browse & self-enroll | Yes | — | — |
+| Complete lessons & quizzes | Yes | — | — |
+| View own progress | Yes | — | — |
+| Assign courses to teachers | — | Yes | Yes |
+| View teacher progress | — | Yes | Yes |
+| Create/edit courses & content | — | Yes | Yes |
+| Build quizzes | — | Yes | Yes |
+| Export progress reports | — | Yes | Yes |
+
+PM has all Admin permissions in this module by default. Tenants can restrict via overrides.
+
+---
+
+## 11. Notifications
 
 ### Architecture
 
@@ -383,13 +512,14 @@ Event sources (workflow transitions, cron reminders, OMR completion, admin annou
 
 ---
 
-## 11. Role-Based Access Control
+## 12. Role-Based Access Control
 
 ### Role Structure
 
-**Operational hierarchy:** Trainer → Project Manager → Admin. PM inherits all Trainer permissions and adds approvals + management.
+**Operational hierarchy:** Trainer → Project Manager → Admin. Each level inherits all permissions from the level below.
 
-**Donor:** Separate branch — view-only access to funded schools. Not part of the operational hierarchy.
+- **PM has all Admin permissions by default** — except module/license configuration which is Admin-only. Tenants can restrict PM permissions via overrides if needed.
+- **Donor:** Separate branch — view-only access to funded schools. Not part of the operational hierarchy.
 
 ### Permission Matrix (system defaults, configurable per tenant)
 
@@ -400,11 +530,14 @@ Event sources (workflow transitions, cron reminders, OMR completion, admin annou
 | Approve/reject entries | — | Yes | — | Yes |
 | Create session plans | Yes | Yes | — | Yes |
 | Upload student data | Yes | Yes | — | Yes |
-| View reports | Own data | Cluster | Funded schools | All |
+| View reports | Own data | All | Funded schools | All |
 | Manage schools | Yes | Yes | — | Yes |
 | Manage trainers | — | Yes | — | Yes |
-| Set targets & config | — | — | — | Yes |
+| Set targets & config | — | Yes | — | Yes |
+| Create/edit courses (LMS) | — | Yes | — | Yes |
 | Module & license config | — | — | — | Yes |
+
+**Key:** PM defaults to the same permissions as Admin (except module/license config). The only difference is data scoping — PM sees their cluster, Admin sees everything. Tenants can restrict specific PM permissions via overrides.
 
 ### Per-Tenant Permission Overrides
 
@@ -418,7 +551,7 @@ Role types are system-defined (Trainer, PM, Donor, Admin) — tenants don't crea
 
 **Resolution:** System defaults → merge tenant overrides → cache in Redis/in-memory per tenant+role.
 
-**Example:** Tenant A uses defaults (Trainers can create sessions). Tenant B overrides: Trainers cannot create sessions (only PMs can). Only the exception is stored — one row in `tenant_role_overrides`.
+**Example:** Tenant A uses defaults (PM can set targets & config). Tenant B overrides: PM cannot set targets (Admin only). Only the exception is stored — one row in `tenant_role_overrides`.
 
 ### Four Layers of Access Control
 
@@ -438,7 +571,7 @@ Role types are system-defined (Trainer, PM, Donor, Admin) — tenants don't crea
 
 ---
 
-## 12. Reporting & Analytics
+## 13. Reporting & Analytics
 
 Two approaches under consideration. May coexist as a hybrid.
 
@@ -485,22 +618,22 @@ Thresholds and KPI weights configurable per tenant via `tenant_settings` JSONB.
 
 ---
 
-## 13. Phasing
+## 14. Phasing
 
 ### Phase 1 — Core Platform
 Modules: M1-M6, M9 + Workflow Engine + Notification Hub (in-app + push) + Offline sync.
 **Exit criteria:** Trainers can log daily attendance, PMs can approve entries, basic reports available.
 
-### Phase 2 — Assessment & Donor
-Modules: M7, M8 + OMR worker + WhatsApp notifications + Geo-tagging + Advanced reporting.
-**Exit criteria:** OMR sheets scanned and auto-scored, donors can view funded school metrics.
+### Phase 2 — Assessment, Donor & AI Curriculum
+Modules: M7, M8, M10 + OMR worker + SCORM player + WhatsApp notifications + Geo-tagging + Advanced reporting.
+**Exit criteria:** OMR sheets scanned and auto-scored, donors can view funded school metrics, teachers can complete courses and quizzes.
 
 ### Phase 3 — Advanced
 AI NL query engine (if not in Phase 1), scheduled auto-reports, activity calendar, advanced analytics, performance tuning.
 
 ---
 
-## 14. Risk Register
+## 15. Risk Register
 
 | Risk | Mitigation |
 |---|---|
@@ -513,7 +646,7 @@ AI NL query engine (if not in Phase 1), scheduled auto-reports, activity calenda
 
 ---
 
-## 15. Open Decisions
+## 16. Open Decisions
 
 | Decision | Status |
 |---|---|

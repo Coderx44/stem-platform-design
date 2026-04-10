@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Curriculum (LMS) — STEM Platform</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e0e0e0; padding: 32px; max-width: 1100px; margin: 0 auto; line-height: 1.5; }
+  h2 { color: #fff; font-size: 24px; margin-bottom: 4px; }
+  h3 { color: #ccc; font-size: 18px; margin-bottom: 12px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 20px; }
+  .section { margin-bottom: 24px; }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .pros, .cons { padding: 8px; border-radius: 4px; }
+  .pros { background: rgba(129,199,132,0.1); }
+  .cons { background: rgba(239,154,154,0.1); }
+  .pros h4 { color: #81c784; font-size: 12px; margin-bottom: 4px; }
+  .cons h4 { color: #ef9a9a; font-size: 12px; margin-bottom: 4px; }
+  .pros ul, .cons ul { padding-left: 16px; font-size: 12px; color: #ccc; }
+  .pros li, .cons li { margin-bottom: 2px; }
+  a { color: #64b5f6; }
+  code { background: #2a2a3a; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+  .back-link { display: inline-block; margin-bottom: 20px; color: #64b5f6; text-decoration: none; font-size: 14px; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<a href="index.html" class="back-link">&larr; Back to Index</a>
+
+<h2>Section 10: AI Curriculum Module (LMS)</h2>
+<p class="subtitle">Teacher training LMS — external content + built-in quizzes, progress tracking, certificates</p>
+
+<div class="section">
+  <h3>Purpose</h3>
+  <div style="padding: 16px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #ccc; line-height: 1.8;">
+    Teachers learn STEM curriculum on the platform, pass assessments, then teach it to students offline. <strong style="color: #ffb74d;">Students don't use this module directly.</strong> This is a licensed module — tenants enable it based on their plan.
+  </div>
+</div>
+
+<div class="section">
+  <h3>Content Structure</h3>
+  <div style="padding: 20px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 20px;">
+      <div style="background: #3a2a1a; padding: 12px 20px; border-radius: 6px; text-align: center; border: 2px solid #ffb74d; min-width: 120px;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 14px;">Course</div>
+        <div style="color: #888; font-size: 10px; margin-top: 4px;">e.g. "STEM Basics Grade 5"</div>
+      </div>
+      <div style="color: #888; font-size: 18px;">&rarr;</div>
+      <div style="background: #2a2a3a; padding: 12px 20px; border-radius: 6px; text-align: center; border: 2px solid #ce93d8; min-width: 120px;">
+        <div style="color: #ce93d8; font-weight: bold; font-size: 14px;">Module</div>
+        <div style="color: #888; font-size: 10px; margin-top: 4px;">Sequential or flexible</div>
+      </div>
+      <div style="color: #888; font-size: 18px;">&rarr;</div>
+      <div style="background: #2a2a3a; padding: 12px 20px; border-radius: 6px; text-align: center; border: 2px solid #64b5f6; min-width: 120px;">
+        <div style="color: #64b5f6; font-weight: bold; font-size: 14px;">Lesson</div>
+        <div style="color: #888; font-size: 10px; margin-top: 4px;">Individual learning unit</div>
+      </div>
+      <div style="color: #888; font-size: 18px;">&rarr;</div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="background: #1a3a2a; padding: 8px 16px; border-radius: 6px; text-align: center; border: 1px solid #81c784;">
+          <div style="color: #81c784; font-weight: bold; font-size: 12px;">Content</div>
+          <div style="color: #888; font-size: 9px;">SCORM / Video / Doc / Rich Text</div>
+        </div>
+        <div style="background: #3a3a1a; padding: 8px 16px; border-radius: 6px; text-align: center; border: 1px solid #fff176;">
+          <div style="color: #fff176; font-weight: bold; font-size: 12px;">Quiz</div>
+          <div style="color: #888; font-size: 9px;">MCQ / T-F / Short Answer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="padding: 12px; background: #2a2a3a; border-radius: 6px; margin-bottom: 24px;">
+  <p style="color: #ccc; margin: 0; font-size: 12px;"><strong style="color: #ffb74d;">Decision pending:</strong> Two content creation approaches under consideration. Both share the same course structure, quiz builder, progress tracking, and data model. They can coexist — tenants could use both.</p>
+</div>
+
+<div class="section" style="border: 2px solid #64b5f6; border-radius: 8px; padding: 16px;">
+  <h3 style="color: #64b5f6; margin-top: 0;">Approach A: SCORM-Based Content</h3>
+  <p class="subtitle">Admins create content in external tools, upload SCORM packages to the platform</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px;">
+      <div style="color: #64b5f6; font-weight: bold; margin-bottom: 6px;">How It Works</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        1. Admin creates content in H5P / Lumi / Articulate (external)<br>
+        2. Exports as SCORM .zip → uploads to platform<br>
+        3. Backend extracts to S3<br>
+        4. Teacher opens lesson → SCORM player (iframe) loads content<br>
+        5. SCORM API reports completion, score, time back to platform<br>
+        6. Resume support — teacher picks up where they left off
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px;">
+      <div style="color: #64b5f6; font-weight: bold; margin-bottom: 6px;">Free Authoring Tools</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        &bull; <strong>H5P</strong> — browser-based, 50+ content types, free<br>
+        &bull; <strong>Lumi</strong> — desktop app, works offline, exports SCORM, free<br>
+        &bull; <strong>Adapt Learning</strong> — responsive courses, open-source<br>
+        &bull; <strong>iSpring Free</strong> — converts PowerPoint to SCORM
+      </div>
+    </div>
+  </div>
+  <div class="pros-cons" style="margin-top: 12px;">
+    <div class="pros">
+      <h4>Pros</h4>
+      <ul>
+        <li>Rich interactive content (branching, simulations, embedded quizzes)</li>
+        <li>Industry standard — content portable across LMS platforms</li>
+        <li>Free authoring tools available (H5P, Lumi)</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Cons</h4>
+      <ul>
+        <li>Requires external tools (learning curve for NGO admins)</li>
+        <li>Content creation is a separate step outside the platform</li>
+        <li>SCORM player adds frontend complexity</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="border: 2px solid #fff176; border-radius: 8px; padding: 16px; margin-top: 16px;">
+  <h3 style="color: #fff176; margin-top: 0;">Approach B: Built-in Content Builder</h3>
+  <p class="subtitle">Admins build courses directly in the platform — no external tools needed</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px;">
+      <div style="color: #fff176; font-weight: bold; margin-bottom: 6px;">How It Works</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        1. Admin uses in-platform editor to create lessons<br>
+        2. Rich text editor (markdown or WYSIWYG) for text content<br>
+        3. Embed YouTube videos or upload videos to S3<br>
+        4. Upload PDFs/slides as viewable resources<br>
+        5. Build quizzes inline with lesson flow<br>
+        6. All content managed in one place
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px;">
+      <div style="color: #fff176; font-weight: bold; margin-bottom: 6px;">Content Types</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        &bull; <strong>Rich text</strong> — formatted text with images<br>
+        &bull; <strong>Video</strong> — YouTube embed or uploaded to S3<br>
+        &bull; <strong>Documents</strong> — PDF, slides (viewable/downloadable)<br>
+        &bull; <strong>Quizzes</strong> — MCQ, T/F, short answer (auto-graded)
+      </div>
+    </div>
+  </div>
+  <div class="pros-cons" style="margin-top: 12px;">
+    <div class="pros">
+      <h4>Pros</h4>
+      <ul>
+        <li>Self-contained — no external tools needed</li>
+        <li>Lower barrier for NGO admins</li>
+        <li>Simpler to build and maintain</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Cons</h4>
+      <ul>
+        <li>Less interactive than SCORM (no branching, simulations)</li>
+        <li>More dev effort to build the editor</li>
+        <li>Content not portable to other LMS platforms</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 16px;">
+  <h3>Comparison</h3>
+  <div style="display: grid; grid-template-columns: 1fr; gap: 2px; background: #1a1a2e; border-radius: 8px; overflow: hidden; font-size: 10px;">
+    <div style="display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0; background: #2a2a4a; padding: 8px 12px; font-weight: bold; color: #aaa; font-size: 11px;">
+      <div>Dimension</div>
+      <div style="text-align: center; color: #64b5f6;">A: SCORM</div>
+      <div style="text-align: center; color: #fff176;">B: Built-in Builder</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>Content richness</div>
+      <div style="text-align: center; color: #81c784;">High — full interactivity</div>
+      <div style="text-align: center;">Medium — text, video, quiz</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Admin skill needed</div>
+      <div style="text-align: center;">Medium — needs authoring tool</div>
+      <div style="text-align: center; color: #81c784;">Low — in-platform editor</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>External tools required</div>
+      <div style="text-align: center; color: #ef9a9a;">Yes (H5P/Lumi are free)</div>
+      <div style="text-align: center; color: #81c784;">No</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Content portability</div>
+      <div style="text-align: center; color: #81c784;">Yes — SCORM is standard</div>
+      <div style="text-align: center; color: #ef9a9a;">No — platform-locked</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>Dev effort</div>
+      <div style="text-align: center;">Medium — SCORM player + API</div>
+      <div style="text-align: center;">Medium — content editor</div>
+    </div>
+  </div>
+  <div style="margin-top: 12px; padding: 12px; background: #1a3a2a; border-radius: 6px; border: 1px solid #81c784;">
+    <div style="color: #ccc; font-size: 12px;">
+      <strong style="color: #81c784;">Both can coexist.</strong> The <code>lessons</code> table supports multiple content types (scorm, video, document, richtext, quiz). A tenant could use SCORM for complex interactive modules and the built-in builder for simple text/video lessons.
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 16px;">
+  <h3>Built-in Quiz Builder (shared — both approaches)</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #fff176;">
+      <div style="color: #fff176; font-weight: bold; margin-bottom: 6px;">Question Types</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        - Multiple choice (single/multi select)<br>
+        - True / False<br>
+        - Short answer<br>
+        All auto-graded.
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #fff176;">
+      <div style="color: #fff176; font-weight: bold; margin-bottom: 6px;">Configuration</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.6;">
+        - Pass/fail threshold (e.g., 70%)<br>
+        - Max attempts (e.g., 3)<br>
+        - Immediate results after submission<br>
+        - Stored in quiz_attempts table
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>User Flows</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #ef9a9a;">
+      <div style="color: #ef9a9a; font-weight: bold; margin-bottom: 8px;">Admin</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.8;">
+        &bull; Create courses, modules, lessons<br>
+        &bull; Upload SCORM/video/document content<br>
+        &bull; Build quizzes (MCQ, T/F, short answer)<br>
+        &bull; Set pass threshold & max attempts<br>
+        &bull; Set module ordering (sequential/flexible)<br>
+        &bull; Assign courses to teachers/groups<br>
+        &bull; View all teacher progress<br>
+        &bull; Export progress reports
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #81c784;">
+      <div style="color: #81c784; font-weight: bold; margin-bottom: 8px;">Teacher</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.8;">
+        &bull; Browse & self-enroll in courses<br>
+        &bull; View assigned courses<br>
+        &bull; Progress through lessons<br>
+        &bull; Watch videos, read docs, complete SCORM<br>
+        &bull; Take quizzes — instant auto-graded results<br>
+        &bull; Retry failed quizzes<br>
+        &bull; View own progress & scores<br>
+        &bull; Receive certificate on completion
+      </div>
+    </div>
+    <div style="background: #1a1a2e; padding: 14px; border-radius: 6px; border-left: 3px solid #ffb74d;">
+      <div style="color: #ffb74d; font-weight: bold; margin-bottom: 8px;">Project Manager</div>
+      <div style="color: #ccc; font-size: 11px; line-height: 1.8;">
+        &bull; Create/edit courses, modules, lessons<br>
+        &bull; Upload SCORM/video/document content<br>
+        &bull; Build quizzes<br>
+        &bull; Assign courses to teachers<br>
+        &bull; View all teacher progress<br>
+        &bull; Monitor completion rates<br>
+        &bull; Export progress reports<br>
+        <br>
+        <span style="color: #888;">Same as Admin by default. Tenant can restrict.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Progress Tracking</h3>
+  <div style="padding: 16px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+
+    <div style="text-align: center; margin-bottom: 16px; color: #ce93d8; font-weight: bold; font-size: 13px;">Metrics Tracked Per Teacher</div>
+
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; text-align: center;">
+        <div style="color: #81c784; font-weight: bold; font-size: 20px;">%</div>
+        <div style="color: #888; font-size: 10px; margin-top: 4px;">Course completion</div>
+      </div>
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; text-align: center;">
+        <div style="color: #64b5f6; font-weight: bold; font-size: 20px;">85</div>
+        <div style="color: #888; font-size: 10px; margin-top: 4px;">Quiz scores</div>
+      </div>
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; text-align: center;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 20px;">2h</div>
+        <div style="color: #888; font-size: 10px; margin-top: 4px;">Time spent per lesson</div>
+      </div>
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; text-align: center;">
+        <div style="color: #ce93d8; font-weight: bold; font-size: 20px;">3</div>
+        <div style="color: #888; font-size: 10px; margin-top: 4px;">Quiz attempts</div>
+      </div>
+      <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; text-align: center;">
+        <div style="color: #4db6ac; font-weight: bold; font-size: 20px;">&check;</div>
+        <div style="color: #888; font-size: 10px; margin-top: 4px;">Certificate issued</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 16px; padding: 12px; background: #2a2a3a; border-radius: 6px;">
+      <div style="color: #ccc; font-size: 11px;">
+        <strong style="color: #ffb74d;">Admin/PM Dashboard:</strong> View progress by teacher, school, cluster, or course. Filter by completion status. Export to Excel.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>SCORM Integration</h3>
+  <div style="padding: 16px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+    <div style="display: flex; align-items: stretch; justify-content: center; gap: 6px; flex-wrap: wrap;">
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; min-width: 130px;">
+        <div style="color: #64b5f6; font-weight: bold; font-size: 11px;">1. Upload</div>
+        <div style="color: #888; margin-top: 4px;">Admin uploads SCORM .zip</div>
+        <div style="color: #888;">to S3</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">&rarr;</div>
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; min-width: 130px;">
+        <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">2. Extract</div>
+        <div style="color: #888; margin-top: 4px;">Backend extracts package</div>
+        <div style="color: #888;">on S3</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">&rarr;</div>
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; min-width: 130px;">
+        <div style="color: #ce93d8; font-weight: bold; font-size: 11px;">3. Launch</div>
+        <div style="color: #888; margin-top: 4px;">SCORM player (iframe)</div>
+        <div style="color: #888;">loads content via presigned URL</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">&rarr;</div>
+      <div style="background: #2a3a4a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; min-width: 130px;">
+        <div style="color: #81c784; font-weight: bold; font-size: 11px;">4. Track</div>
+        <div style="color: #888; margin-top: 4px;">SCORM API reports</div>
+        <div style="color: #888;">completion, score, time</div>
+      </div>
+      <div style="display: flex; align-items: center; color: #888;">&rarr;</div>
+      <div style="background: #1a3a2a; padding: 12px; border-radius: 6px; text-align: center; font-size: 10px; min-width: 130px; border: 1px solid #81c784;">
+        <div style="color: #81c784; font-weight: bold; font-size: 11px;">5. Store</div>
+        <div style="color: #888; margin-top: 4px;">Tracking data saved</div>
+        <div style="color: #888;">to lesson_progress (JSONB)</div>
+      </div>
+    </div>
+    <div style="margin-top: 12px; padding: 10px; background: #2a2a3a; border-radius: 4px; font-size: 11px; color: #888;">
+      Supports SCORM 1.2 and SCORM 2004. xAPI (Tin Can) support can be added later.
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Data Model</h3>
+  <div style="padding: 16px; background: #1a1a2e; border-radius: 8px; font-size: 12px; color: #e0e0e0;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <div>
+        <div style="color: #ffb74d; font-weight: bold; margin-bottom: 8px;">Content Tables</div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #ffb74d;">
+          <div style="color: #ffb74d; font-weight: bold; font-size: 11px;">courses</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">id, tenant_id, title, description, thumbnail_url, created_by, status (draft/published/archived)</div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #ce93d8;">
+          <div style="color: #ce93d8; font-weight: bold; font-size: 11px;">course_modules</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">id, course_id, tenant_id, title, order, is_sequential</div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #64b5f6;">
+          <div style="color: #64b5f6; font-weight: bold; font-size: 11px;">lessons</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">id, module_id, tenant_id, title, content_type (scorm/video/document/quiz), content_url (S3), scorm_config (JSONB), order</div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #fff176;">
+          <div style="color: #fff176; font-weight: bold; font-size: 11px;">quizzes</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">id, lesson_id, tenant_id, title, pass_threshold, max_attempts, questions (JSONB array)</div>
+        </div>
+      </div>
+      <div>
+        <div style="color: #81c784; font-weight: bold; margin-bottom: 8px;">Tracking Tables</div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #81c784;">
+          <div style="color: #81c784; font-weight: bold; font-size: 11px;">enrollments</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">id, tenant_id, teacher_id, course_id, enrolled_at, enrolled_by (self/admin/pm), status (in_progress/completed/dropped)</div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #81c784;">
+          <div style="color: #81c784; font-weight: bold; font-size: 11px;">lesson_progress</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">id, tenant_id, teacher_id, lesson_id, status (not_started/in_progress/completed), time_spent_seconds, completed_at, scorm_data (JSONB)</div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #81c784;">
+          <div style="color: #81c784; font-weight: bold; font-size: 11px;">quiz_attempts</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">id, tenant_id, teacher_id, quiz_id, attempt_number, answers (JSONB), score, passed, started_at, completed_at</div>
+        </div>
+        <div style="background: #2a2a3a; padding: 12px; border-radius: 6px; border-left: 3px solid #4db6ac;">
+          <div style="color: #4db6ac; font-weight: bold; font-size: 11px;">certificates</div>
+          <div style="font-size: 10px; color: #888; line-height: 1.6; margin-top: 4px;">id, tenant_id, teacher_id, course_id, issued_at, certificate_url (S3)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Permission Matrix</h3>
+  <div style="display: grid; grid-template-columns: 1fr; gap: 2px; background: #1a1a2e; border-radius: 8px; overflow: hidden; font-size: 10px;">
+    <div style="display: grid; grid-template-columns: 200px repeat(3, 1fr); gap: 0; background: #2a2a4a; padding: 8px 12px; font-weight: bold; color: #aaa; font-size: 11px;">
+      <div>Action</div>
+      <div style="text-align: center; color: #81c784;">Teacher</div>
+      <div style="text-align: center; color: #ffb74d;">PM</div>
+      <div style="text-align: center; color: #ef9a9a;">Admin</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px repeat(3, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>Browse & self-enroll</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px repeat(3, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Complete lessons & quizzes</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px repeat(3, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>View own progress</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px repeat(3, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Assign courses</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px repeat(3, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>View teacher progress</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px repeat(3, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Create/edit courses</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px repeat(3, 1fr); gap: 0; background: #1a1a2e; padding: 8px 12px; color: #ccc;">
+      <div>Build quizzes</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px repeat(3, 1fr); gap: 0; background: #2a2a3a; padding: 8px 12px; color: #ccc;">
+      <div>Export progress reports</div>
+      <div style="text-align: center; color: #888;">&mdash;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+      <div style="text-align: center; color: #81c784;">&#10003;</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
